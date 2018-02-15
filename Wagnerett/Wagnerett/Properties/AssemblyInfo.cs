@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WagnerIT")]
+[assembly: AssemblyTitle("Wagnerett")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WagnerIT")]
+[assembly: AssemblyProduct("Wagnerett")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fad99548-fa0a-4105-8d39-ad5c5f468b2d")]
+[assembly: Guid("f8194351-384d-4af1-b3d3-2f0a06541aa4")]
 
 // Version information for an assembly consists of the following four values:
 //
