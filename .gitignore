@@ -1,3 +1,10 @@
+#Added by Kyle
+applicationhost.config
+db.lock
+storage.ide
+storage.ide-shm
+storage.ide-wal
+
 ###################
 # compiled source #
 ###################
@@ -8,6 +15,7 @@
 *.dll.config
 *.cache
 *.suo
+*.config
 # Include dlls if they’re in the NuGet packages directory
 !/packages/*/lib/*.dll
 !/packages/*/lib/*/*.dll

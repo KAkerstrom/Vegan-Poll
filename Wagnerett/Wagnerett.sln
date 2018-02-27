@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wagnerett", "Wagnerett\Wagnerett.csproj", "{F8194351-384D-4AF1-B3D3-2F0A06541AA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBLayer", "DBLayer\DBLayer.csproj", "{129BAE75-531D-4642-88BA-96AE257D55EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{F8194351-384D-4AF1-B3D3-2F0A06541AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8194351-384D-4AF1-B3D3-2F0A06541AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8194351-384D-4AF1-B3D3-2F0A06541AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{129BAE75-531D-4642-88BA-96AE257D55EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{129BAE75-531D-4642-88BA-96AE257D55EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{129BAE75-531D-4642-88BA-96AE257D55EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{129BAE75-531D-4642-88BA-96AE257D55EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CE51C4D-7B84-48AE-BCC2-8C6188A11373}
 	EndGlobalSection
 EndGlobal
