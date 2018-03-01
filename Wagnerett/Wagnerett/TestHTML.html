@@ -6,8 +6,9 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     <script>
-        $(document).ready(function() {
-            $.post("/PollAPI.aspx", function (data, success) {
+        $(document).ready(function () {
+            //alert("Hi");
+            $.post("/PollAPI.aspx", { action: 67, data: {name: "Jason", Age: 23} }, function (data, success) {
                 console.log("Data: ", data);
                 console.log("Success: ", success);
             });

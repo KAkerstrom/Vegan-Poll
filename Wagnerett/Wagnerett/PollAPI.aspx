@@ -1,1 +1,1 @@
-﻿<%@ Page Language="C#" ContentType="application/json" AutoEventWireup="true" CodeBehind="PollAPI.aspx.cs" Inherits="Wagnerett.PollAPI" %>
+﻿<%@ Page ContentType="application/json" CodeBehind="PollAPI.aspx.cs" Inherits="Wagnerett.PollAPI" %>
