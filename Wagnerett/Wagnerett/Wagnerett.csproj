@@ -66,9 +66,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Dustinssupertechywebform.aspx" />
     <Content Include="jadeon.txt" />
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -84,6 +84,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dustinssupertechywebform.aspx.cs">
+      <DependentUpon>Dustinssupertechywebform.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dustinssupertechywebform.aspx.designer.cs">
+      <DependentUpon>Dustinssupertechywebform.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PollAPI.aspx.cs">
       <DependentUpon>PollAPI.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
