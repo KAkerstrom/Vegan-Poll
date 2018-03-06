@@ -1,0 +1,60 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: #111;
+}
+
+.VertDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.HorizDiv {
+    display: flex;
+    flex-direction: row;
+}
+
+#Header {
+    display: flex;
+    flex-direction: row;
+
+    height: 70px;
+
+    font-family: MoonBold;
+    font-size: 40px;
+
+    color: #EEE;
+
+    background-color: red;
+}
+
+#Body {
+    flex: 2;
+
+    background: blue;
+}
+
+.RadioBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.RadioBox .Button {
+    width: 20px;
+    height: 20px;
+
+    background: black;
+
+    border-radius: 100%;
+}
+
+.RadioBox .Label {
+    flex: 2;
+}

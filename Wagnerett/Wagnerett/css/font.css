@@ -1,0 +1,14 @@
+﻿@font-face {
+    font-family: Moon;
+    src: url(font/Moon2.0-Regular.otf);
+}
+
+@font-face {
+    font-family: MoonBold;
+    src: url(font/Moon2.0-Bold.otf);
+}
+
+@font-face {
+    font-family: MoonLight;
+    src: url(font/Moon2.0-Light.otf);
+}
