@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -29,8 +30,7 @@ namespace DBLayer
         {
             SqlConnection con = new SqlConnection();
 
-            string conString =
-                $"Server={Server};Database={Database};User Id={UserName};Password={Password};Connection Timeout=5;";
+            string conString = $"Server={Server};Database={Database};User Id={UserName};Password={Password};Connection Timeout=5;";
             string sqlString = "INSERT INTO Polls ()";
 
             con.ConnectionString = conString;
@@ -48,5 +48,29 @@ namespace DBLayer
 
             return true;
         }
+
+        public static Poll GetPoll(int PollID)
+        {
+            string conString = $"Server={Server};Database={Database};User Id={UserName};Password={Password};Connection Timeout=5;";
+            string sql = "SELECT * FROM Polls WHERE PollID = @pID";
+            Poll retPoll = new Poll();
+
+            SqlConnection con = new SqlConnection(conString);
+            SqlCommand command = new SqlCommand(sql, con);
+            command.Parameters.Add("@pID", SqlDbType.Int);
+            command.Parameters["@pID"].Value = PollID;
+
+            using (SqlDataReader dr = command.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    string treatment = dr[0].ToString();
+                }
+            }
+
+            return retPoll;
+        }
+            
+
     }
 }
