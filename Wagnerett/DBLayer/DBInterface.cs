@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace DBLayer
 {
@@ -14,9 +15,14 @@ namespace DBLayer
         private const string UserName = "SQLAdmin";
         private const string Password = "P@$$W0rd";
 
+        /// <summary>
+        /// Generates a 32-character hexadecimal GUID string.
+        /// </summary>
+        /// <returns>A 32-character GUID.</returns>
         private static string GetRandomCode()
         {
-            throw new NotImplementedException();
+            Guid id = Guid.NewGuid();
+            return id.ToString().Replace("-", "");
         }
 
         public static bool CreatePoll(Poll poll)
