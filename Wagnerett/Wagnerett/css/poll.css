@@ -21,7 +21,3 @@
 .Answer:not(:last-child) {
     margin-bottom: 5px;
 }
-
-.RadioBox .Button {
-    margin-right: 10px;
-}

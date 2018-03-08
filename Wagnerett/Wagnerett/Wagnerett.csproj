@@ -69,6 +69,7 @@
     <Content Include="css\font.css" />
     <Content Include="css\main.css" />
     <Content Include="css\poll.css" />
+    <Content Include="css\radiobutton.css" />
     <Content Include="js\polldisplay.js" />
     <Content Include="UberImportantData\jadeon.txt" />
     <Content Include="packages.config" />
