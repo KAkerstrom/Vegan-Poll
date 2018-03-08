@@ -26,14 +26,31 @@ namespace DBLayer
             return id.ToString().Replace("-", "");
         }
 
+        /// <summary>
+        /// Creates a poll in the database.
+        /// </summary>
+        /// <param name="poll">The poll to insert into the database.</param>
+        /// <returns>Returns whether the operation was successful.</returns>
         public static bool CreatePoll(Poll poll)
         {
             SqlConnection con = new SqlConnection();
 
             string conString = $"Server={Server};Database={Database};User Id={UserName};Password={Password};Connection Timeout=5;";
-            string sqlString = "INSERT INTO Polls ()";
+            string sqlString =
+                "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID) VALUES @pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId)";
 
             con.ConnectionString = conString;
+
+            SqlCommand command = new SqlCommand(sqlString, con);
+            command.Parameters.AddWithValue("@pollId", poll.PollID);
+            command.Parameters.AddWithValue("@pollQuestion", poll.Question);
+            command.Parameters.AddWithValue("@timeCreated", DateTime.Now);
+            command.Parameters.AddWithValue("@endDate", poll.EndDate);
+            command.Parameters.AddWithValue("@tripCode", poll.Tripcode);
+            //command.Parameters.AddWithValue("@answerTypeId", poll.PUTANANSWERTYPEHERE);
+            command.Parameters.AddWithValue("@pollQuestion", poll.Question);
+
+            //Also remember to insert poll answers!
 
             try
             {
