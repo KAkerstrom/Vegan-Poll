@@ -86,7 +86,7 @@ namespace DBLayer
         /// <returns>Returns whether the operation was successful.</returns>
         public static bool CreatePoll(Poll poll)
         {
-
+            //TODO: finish this method
             string sqlString = "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID) VALUES @pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId)";
             SqlCommand command = new SqlCommand(sqlString, con);
             command.Parameters.AddWithValue("@pollId", poll.PollID);
