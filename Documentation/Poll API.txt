@@ -1,0 +1,84 @@
+Possible actions:
+add_poll
+close_poll
+edit_poll
+delete_poll
+vote
+
+add_poll
+		Server receives:
+		"action": "add_poll",
+		data: {
+				  "PollQuestion": (string),
+				  "EndDate": (datetime?),
+				  "AnswerType": (int),
+				  "Answers": [
+					  (string = answer text),
+					  (string = answer text),
+					  (string = answer text),
+					  (string = answer text)
+				  ]
+		}
+
+		Server sends: (If unsuccessful, both strings will be null)
+		"Success": (string = "true" or "false", if operation was successful),
+		"Error": [
+			(string = error),
+			(string = error),
+			(string = error)
+		]
+		"PollID": (string),
+		"TripCode": (string)
+
+		  
+close_poll
+		Server receives:
+		"action": "close_poll",
+		data: (string = PollID)
+
+		Server sends:
+		"Success": (string = "true" or "false", if operation was successful),
+		"Error": [
+			(string = error),
+			(string = error),
+			(string = error)
+		]
+
+
+edit_poll
+		Server receives:
+		"action": "edit_poll",
+		data: {
+				  "PollID": (string),
+				  "PollQuestion": (string),
+				  "EndDate": (datetime?),
+				  "AnswerType": (int),
+				  "Answers": [
+					  (string = answer text),
+					  (string = answer text),
+					  (string = answer text),
+					  (string = answer text)
+				  ]
+		}
+
+		Server sends:
+		[string = "true" or "false" (if operation was successful)]
+
+
+delete_poll
+		Server receives:
+		"action": "delete_poll",
+		(string = PollID)
+
+		Server sends:
+		[string = "true" or "false" (if operation was successful)]
+
+
+vote
+		Server receives:
+		"action": "vote",
+		data: (string = PollID),
+			  (string = Answer ID)
+
+		Server sends:
+		(string = "true" or "false" (if operation was successful))
