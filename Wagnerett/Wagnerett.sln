@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wagnerett", "Wagnerett\Wagnerett.csproj", "{F8194351-384D-4AF1-B3D3-2F0A06541AA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBLayer", "DBLayer\DBLayer.csproj", "{129BAE75-531D-4642-88BA-96AE257D55EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APILayer", "APILayer\APILayer.csproj", "{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{129BAE75-531D-4642-88BA-96AE257D55EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{129BAE75-531D-4642-88BA-96AE257D55EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{129BAE75-531D-4642-88BA-96AE257D55EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
