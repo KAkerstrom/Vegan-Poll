@@ -19,6 +19,8 @@
 .Answer {
     font-family: ComicNeueBold;
     color: #BBB;
+
+    margin-left: 20px;
 }
 
 .Answer:not(:last-child) {
