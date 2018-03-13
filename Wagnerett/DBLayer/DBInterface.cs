@@ -114,8 +114,9 @@ namespace DBLayer
                 command.ExecuteNonQuery();
                 CloseDB();
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return false;
             }
 
