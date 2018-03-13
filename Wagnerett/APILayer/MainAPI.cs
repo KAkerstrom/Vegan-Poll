@@ -14,7 +14,6 @@ namespace APILayer
         {
             //Get data from Request.Form in the form of "action", "data[PollQuestion]" or "data[doot[doot]]"
             Response.ContentType = "application/json";
-            object a = Request.Form;
             string action = Request.Form["action"];
 
             switch (action)
@@ -22,7 +21,7 @@ namespace APILayer
                 //Server receives:
                 //{
                 //  "action":"add_poll",
-                //  data:{
+                //  "data":{
                 //            "PollQuestion": (string),
                 //            "EndDate": (datetime?),
                 //            "AnswerType": (int),
@@ -43,8 +42,10 @@ namespace APILayer
                 //            (string = error),
                 //            (string = error)
                 //  ],
-                //  "PollID":(string),
-                //  "TripCode":(string)
+                //  "data":{
+                //      "PollID":(string),
+                //      "TripCode":(string)
+                //   }
                 //}
                 case "add_poll":
                     {
@@ -70,8 +71,10 @@ namespace APILayer
                             string resp = "{" +
                                           "\"Success\":true," +
                                           "\"Error\":[]," +
+                                          "\"data\":{" +
                                           $"\"PollID\":\"{id}\"," +
                                           $"\"TripCode\":\"{trip}\"" +
+                                          "}" +
                                           "}";
                             Response.Write(resp);
                         }
@@ -80,8 +83,10 @@ namespace APILayer
                             string resp = "{" +
                                           "\"Success\":false," +
                                           "\"Error\":[]," + //Todo: Populate errors & add try-catches
+                                          "\"data\":{" +
                                           $"\"PollID\":null," +
                                           $"\"TripCode\":null" +
+                                          "}" +
                                           "}";
                             Response.Write(resp);
                         }
