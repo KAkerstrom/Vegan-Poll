@@ -96,7 +96,7 @@ namespace DBLayer
 
             //TODO: finish this method
             string sqlString =
-                "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID) VALUES @pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId)";
+                "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID) VALUES (@pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId)";
             SqlCommand command = new SqlCommand(sqlString, con);
             command.Parameters.AddWithValue("@pollId", poll.PollID);
             command.Parameters.AddWithValue("@pollQuestion", poll.Question);
@@ -104,7 +104,6 @@ namespace DBLayer
             command.Parameters.AddWithValue("@endDate", NullToDBNull(poll.EndDate));
             command.Parameters.AddWithValue("@tripCode", poll.Tripcode);
             command.Parameters.AddWithValue("@answerTypeId", poll.AnswerType);
-            command.Parameters.AddWithValue("@pollQuestion", poll.Question);
             //command.Prepare();
             //Also remember to insert poll answers!
 
