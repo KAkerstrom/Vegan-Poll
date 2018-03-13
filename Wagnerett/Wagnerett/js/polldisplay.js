@@ -13,6 +13,6 @@
 
 function API(action, data, c) {
     $.post('/PollAPI.aspx', { action: action, data: data }, function (success, data) {
-        alert(success, data);
+        console.log(success, data);
     });
 }
