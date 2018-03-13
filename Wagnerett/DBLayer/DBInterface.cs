@@ -121,6 +121,14 @@ namespace DBLayer
             return true;
         }
 
+        public static void InsertPollAnswer(List<PollAnswer> AnswerList)
+        {
+            foreach (PollAnswer A in AnswerList)
+            {
+                InsertPollAnswer(A);
+            }
+        }
+
         public static void InsertPollAnswer(PollAnswer Answer)
         {
             string sqlString =
