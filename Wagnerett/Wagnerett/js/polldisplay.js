@@ -4,6 +4,7 @@ $(document).ready(function () {
     $(".PollBox").append(RadioBox('gr', 'yes', 'Yes'));
     $(".PollBox").append(RadioBox('gr', 'no', 'No'));
     $(".PollBox").append(RadioBox('gr', 'maybe', 'Maybe So'));
+    $(".PollBox").append('<div class="SubmitButton">Submit!</div>');
 });
 
 function RadioBox(group, name, label) {
@@ -34,16 +35,16 @@ function RadioBox(group, name, label) {
 
                 $(gr[key]).children('.Dot').animate({
                     opacity: '0.0',
-                    width: '0%',
-                    height: '0%'
+                    width: '0px',
+                    height: '0px'
                 }, 150);
             }
         }
         
         button.children('.Dot').animate({
             opacity: '1.0',
-            width: '70%',
-            height: '70%'
+            width: '15px',
+            height: '15px'
         }, 150);
     });
     

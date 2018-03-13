@@ -10,23 +10,23 @@
         width: 25px;
         height: 25px;
         background: none;
-        border: 3px solid #000;
+        border: 3px solid #EEE;
         box-sizing: border-box;
         border-radius: 100%;
 
         margin-right: 10px;
 
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition: border-color 0.3s, box-shadow 0.2s, transform 0.3s;
     }
 
         .RadioBox .Button .Dot {
             width: 0%;
             height: 0%;
             opacity: 0.0;
-            background-color: black;
+            background-color: #EEE;
             border-radius: 100%;
 
-            transition: background-color 0.1s;
+            transition: background-color 0.1s, transform 0.3s;
         }
 
         .RadioBox .Button:hover {
@@ -37,12 +37,49 @@
         flex: 2;
     }
 
-    .RadioBox .Button:hover {
-        border-color: #666;
+    *:hover > .RadioBox .Button {
+        border-color: #999;
         box-shadow: inset 0px 0px 5px rgba(100, 100, 100, 0.5);
+
+        transform: scale(1.2);
     }
 
-        .RadioBox .Button:hover .Dot {
-            background-color: #666;
+        *:hover > .RadioBox .Button .Dot {
+            background-color: #999;
             box-shadow: 0px 0px 5px rgba(100, 100, 100, 0.5);
+
+            transform: scale(0.83333333333);
         }
+
+
+
+
+.SubmitButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    width: 200px;
+    height: 50px;
+
+    margin-left: auto;
+
+    font-family: ComicNeueBold;
+    font-size: 25px;
+
+    border: 5px solid #DDD;
+    border-radius: 10px;
+
+    color: #DDD;
+
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.SubmitButton:hover {
+    background-color: #DDD;
+    color: #333;
+
+    cursor: pointer;
+}

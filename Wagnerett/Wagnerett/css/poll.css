@@ -1,21 +1,24 @@
 ﻿.PollBox {
-    background: white;
+    background: #333;
     margin: 10px;
 
-    border-radius: 5px;
+    border-radius: 1px;
 
     padding: 5px;
 }
 
 .Question {
-    font-family: MoonBold;
+    font-family: ComicNeueBold;
     font-size: 25px;
 
     margin-bottom: 10px;
+
+    color: white;
 }
 
 .Answer {
-
+    font-family: ComicNeueBold;
+    color: #BBB;
 }
 
 .Answer:not(:last-child) {

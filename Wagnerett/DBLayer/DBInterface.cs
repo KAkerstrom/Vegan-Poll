@@ -84,8 +84,13 @@ namespace DBLayer
         /// </summary>
         /// <param name="poll">The poll to insert into the database.</param>
         /// <returns>Returns whether the operation was successful.</returns>
-        public static bool CreatePoll(Poll poll)
+        public static bool CreatePoll(Poll poll, out string pollID, out string tripCode)
         {
+            pollID = GetRandomCode();
+            tripCode = GetRandomCode();
+            poll.PollID = pollID;
+            poll.Tripcode = tripCode;
+
             //TODO: finish this method
             string sqlString = "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID) VALUES @pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId)";
             SqlCommand command = new SqlCommand(sqlString, con);
