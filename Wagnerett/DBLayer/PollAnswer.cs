@@ -10,5 +10,17 @@ namespace DBLayer
     {
         public string AnswerText { get; set; }
         public int Votes { get; set; }
+
+        public PollAnswer(string answer)
+        {
+            AnswerText = answer;
+            Votes = 0;
+        }
+
+        public PollAnswer(string answer, int votes)
+        {
+            AnswerText = answer;
+            Votes = votes;
+        }
     }
 }
