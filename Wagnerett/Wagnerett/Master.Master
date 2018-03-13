@@ -16,7 +16,7 @@
 <body>
     <div class="VertDiv" style="width:600px; min-height:100vh;">
         <div id="Header" class="HorizDiv">
-            <div style="display: inline-block;">Moon Poll</div>
+            <div id="Logo" style="display: inline-block;">Moon Poll</div>
         </div>
         <div id="Body">
     <asp:ContentPlaceHolder ID="body" runat="server">

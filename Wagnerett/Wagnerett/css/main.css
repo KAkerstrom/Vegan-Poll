@@ -25,6 +25,8 @@ body {
     display: flex;
     flex-direction: row;
 
+    text-align: center;
+
     height: 70px;
 
     font-family: Moon;
@@ -33,6 +35,10 @@ body {
     color: #EEE;
 
     background-color: #333;
+}
+
+#Logo {
+    margin: auto;
 }
 
 #Body {
