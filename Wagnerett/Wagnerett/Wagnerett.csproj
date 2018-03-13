@@ -71,6 +71,7 @@
     <Content Include="css\poll.css" />
     <Content Include="css\radiobutton.css" />
     <Content Include="js\polldisplay.js" />
+    <Content Include="js\RadioBox.js" />
     <Content Include="UberImportantData\jadeon.txt" />
     <Content Include="packages.config" />
     <Content Include="Master.Master" />
