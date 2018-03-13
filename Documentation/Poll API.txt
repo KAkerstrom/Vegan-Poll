@@ -9,7 +9,7 @@ add_poll
                 Server receives:
                 {
                   "action":"add_poll",
-                  data:{
+                  "data":{
                             "PollQuestion": (string),
                             "EndDate": (datetime?),
                             "AnswerType": (int),
@@ -30,8 +30,10 @@ add_poll
                             (string = error),
                             (string = error)
                   ],
-                  "PollID":(string),
-                  "TripCode":(string)
+                  "data":{
+                      "PollID":(string),
+                      "TripCode":(string)
+                   }
                 }
 
 		  
