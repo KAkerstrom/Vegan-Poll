@@ -101,7 +101,7 @@ namespace DBLayer
             command.Parameters.AddWithValue("@pollId", poll.PollID);
             command.Parameters.AddWithValue("@pollQuestion", poll.Question);
             command.Parameters.AddWithValue("@timeCreated", DateTime.Now);
-            command.Parameters.AddWithValue("@endDate", poll.EndDate);
+            command.Parameters.AddWithValue("@endDate", NullToDBNull(poll.EndDate));
             command.Parameters.AddWithValue("@tripCode", poll.Tripcode);
             command.Parameters.AddWithValue("@answerTypeId", poll.AnswerType);
             command.Parameters.AddWithValue("@pollQuestion", poll.Question);
@@ -114,7 +114,7 @@ namespace DBLayer
                 command.ExecuteNonQuery();
                 CloseDB();
             }
-            catch (SqlException sqlex)
+            catch
             {
                 return false;
             }
@@ -138,9 +138,9 @@ namespace DBLayer
                 command.ExecuteNonQuery();
                 CloseDB();
             }
-            catch (SqlException sqlex)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
 
         }
@@ -168,19 +168,21 @@ namespace DBLayer
 
         public static bool ClosePoll(string pollID)
         {
-            return true;
+            string sql = "UPDATE Polls SET EndDate = @eDate WHERE PollID = @pID";
+            SqlCommand command = new SqlCommand(sql, con);
             try
             {
                 int pID = Convert.ToInt32(pollID);
-                string sql = "UPDATE Polls SET EndDate = @eDate WHERE PollID = @pID";
-                SqlCommand command = new SqlCommand(sql, con);
-                command.Parameters.AddWithValue("@pID", pID);
                 command.Parameters.AddWithValue("@eDate", DateTime.Now);
-
-
+                command.Parameters.AddWithValue("@pID", pID);
+                OpenDB();
+                command.ExecuteNonQuery();
+                CloseDB();
+                return true;
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
@@ -198,6 +200,24 @@ namespace DBLayer
         public static bool Vote(string pollID ,string answer)
         {
             return true;
+        }
+        /// <summary>
+        /// Replaces null Object with DBNull.Value. Used for adding nullable types to database.
+        /// </summary>
+        /// <param name="O"></param>
+        /// <returns></returns>
+        private static Object NullToDBNull(Object O)
+        {
+            return O ?? DBNull.Value;
+        }
+        /// <summary>
+        /// Rebleces DBNull Objects with null. Used for translating null database entries to nullable parameters
+        /// </summary>
+        /// <param name="O"></param>
+        /// <returns></returns>
+        private static Object DBNullToNull(Object O)
+        {
+            return O == DBNull.Value ? null : O;
         }
     }
 }

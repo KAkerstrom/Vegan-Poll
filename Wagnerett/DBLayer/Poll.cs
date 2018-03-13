@@ -10,10 +10,11 @@ namespace DBLayer
     {
         public string PollID { get; set; }
         public string Question { get; set; }
-        public DateTime DateCreated { get; }
+        public DateTime DateCreated { get; set; }
         public DateTime EndDate { get; set; }
         public string Tripcode { get; set; }
         public int AnswerType { get; set; }
         public List<PollAnswer> Answers { get; set; }
+
     }
 }
