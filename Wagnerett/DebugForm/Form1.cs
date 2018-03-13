@@ -20,7 +20,7 @@ namespace DebugForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DBInterface.GetPoll(1);
+            DBInterface.CreatePoll(new Poll(), out 1, "outqwerty");
         }
     }
 }
