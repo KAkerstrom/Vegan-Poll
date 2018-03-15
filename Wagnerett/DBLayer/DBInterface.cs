@@ -194,6 +194,7 @@ namespace DBLayer
                 return false;
             }
         }
+
         /// <summary>
         /// Updates a poll in the database that has the same ID as the poll taken as a parameter. PollID, TimeCreated, and Tripcode are not changed.
         /// </summary>
@@ -201,7 +202,8 @@ namespace DBLayer
         /// <returns></returns>
         public static bool EditPoll(Poll newPoll)
         {
-            string sql = "UPDATE Polls SET PollQuestion = @pQuestion, EndDate = @pEndDate, AnswerTypeID = @pAnswerTypeID WHERE PollID = @pID";
+            string sql =
+                "UPDATE Polls SET PollQuestion = @pQuestion, EndDate = @pEndDate, AnswerTypeID = @pAnswerTypeID WHERE PollID = @pID";
             SqlCommand command = new SqlCommand(sql, con);
             try
             {
@@ -217,10 +219,12 @@ namespace DBLayer
                 {
                     return true;
                 }
+
                 if (affectedRows == 0)
                 {
                     throw new Exception("Poll does not exist in database.");
                 }
+
                 throw new Exception("ERROR: Multiple rows affected.");
             }
             catch (Exception ex)
@@ -232,7 +236,23 @@ namespace DBLayer
 
         public static bool DeletePoll(string pollID)
         {
-            return true;
+            string sql = "UPDATE Polls SET Disabled = 1 WHERE PollID = @pID";
+            SqlCommand command = new SqlCommand(sql, con);
+            OpenDB();
+            int affectedRows = command.ExecuteNonQuery();
+            CloseDB();
+
+            if (affectedRows == 1)
+            {
+                return true;
+            }
+
+            if (affectedRows == 0)
+            {
+                throw new Exception("Poll does not exist in database.");
+            }
+
+            throw new Exception("ERROR: Multiple rows affected.");
         }
 
         /// <summary>
