@@ -20,11 +20,9 @@ namespace DebugForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            if (DBInterface.DeletePoll("f3dc779e56f249e3b2acf666755a35a6"))
-            {
-                MessageBox.Show("Success!");
-            }
+            Poll l = DBInterface.GetPoll("f3dc779e56f249e3b2acf666755a35a6");
+            listBox1.Items.Add(l.Question);
+            listBox1.Items.Add(l.Disabled);
         }
     }
 }
