@@ -20,7 +20,11 @@ namespace DebugForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DBInterface.CreatePoll(new Poll(), out 1, "outqwerty");
+
+            if (DBInterface.DeletePoll("f3dc779e56f249e3b2acf666755a35a6"))
+            {
+                MessageBox.Show("Success!");
+            }
         }
     }
 }
