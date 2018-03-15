@@ -193,10 +193,40 @@ namespace DBLayer
                 return false;
             }
         }
-
+        /// <summary>
+        /// Updates a poll in the database that has the same ID as the poll taken as a parameter. PollID, TimeCreated, and Tripcode are not changed.
+        /// </summary>
+        /// <param name="newPoll"></param>
+        /// <returns></returns>
         public static bool EditPoll(Poll newPoll)
         {
-            return true;
+            string sql = "UPDATE Polls SET PollQuestion = @pQuestion, EndDate = @pEndDate, AnswerTypeID = @pAnswerTypeID WHERE PollID = @pID";
+            SqlCommand command = new SqlCommand(sql, con);
+            try
+            {
+                command.Parameters.AddWithValue("@pQuestion", newPoll.Question);
+                command.Parameters.AddWithValue("@pEndDate", NullToDBNull(newPoll.EndDate));
+                command.Parameters.AddWithValue("@AnswerTypeID", newPoll.AnswerType);
+                command.Parameters.AddWithValue("@pID", newPoll.PollID);
+                OpenDB();
+                int affectedRows = command.ExecuteNonQuery();
+                CloseDB();
+
+                if (affectedRows == 1)
+                {
+                    return true;
+                }
+                if (affectedRows == 0)
+                {
+                    throw new Exception("Poll does not exist in database.");
+                }
+                throw new Exception("ERROR: Multiple rows affected.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
 
         public static bool DeletePoll(string pollID)

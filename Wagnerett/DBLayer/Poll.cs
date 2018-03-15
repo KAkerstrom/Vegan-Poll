@@ -14,6 +14,7 @@ namespace DBLayer
         public DateTime? EndDate { get; set; }
         public string Tripcode { get; set; }
         public int AnswerType { get; set; }
+        public bool Disabled { get; set; }
         public List<PollAnswer> Answers { get; set; }
 
         public Poll(string ID, string Quest, DateTime Datecreate, DateTime End, string trip, int Answer)
@@ -24,6 +25,7 @@ namespace DBLayer
             EndDate = End;
             Tripcode = trip;
             AnswerType = Answer;
+            Disabled = false;
         }
         public Poll()
         {
