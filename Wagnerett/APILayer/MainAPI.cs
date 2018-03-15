@@ -25,6 +25,7 @@ namespace APILayer
                 //            "PollQuestion": (string),
                 //            "EndDate": (datetime?),
                 //            "AnswerType": (int),
+                //            "AnswerCount": (int),
                 //            "Answers": [
                 //                (string = answer text),
                 //                (string = answer text),
@@ -251,8 +252,8 @@ namespace APILayer
                 case "vote":
                 {
                     string id = Request.Form["data[PollID]"];
-                    string answer = Request.Form["data[AnswerID]"];
-                    if (DBInterface.Vote(id, answer))
+                    int answerId = Convert.ToInt32(Request.Form["data[AnswerID]"]);
+                    if (DBInterface.Vote(id, answerId))
                     {
                         string resp = "{" +
                                       "\"Success\":true," +

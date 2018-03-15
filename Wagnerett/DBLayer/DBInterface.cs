@@ -28,7 +28,7 @@ namespace DBLayer
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                AnswerTypeDictionary.Add((int) reader["AnswerTypeID"], (string) reader["Type"]);
+                AnswerTypeDictionary.Add((int)reader["AnswerTypeID"], (string)reader["Type"]);
             }
 
             CloseDB();
@@ -204,9 +204,53 @@ namespace DBLayer
             return true;
         }
 
-        public static bool Vote(string pollID ,string answer)
+        /// <summary>
+        /// Increases the vote count on the given poll answer.
+        /// </summary>
+        /// <param name="pollId">The Poll ID.</param>
+        /// <param name="answerId">The Answer ID.</param>
+        /// <returns>Returns true if successful. If not, writes the error to the console and returns false.</returns>
+        public static bool Vote(string pollId, int answerId)
         {
-            return true;
+            int votes;
+            string sql = "SELECT AnswerCount FROM PollAnswers WHERE PollID = @pollId and AnswerID = @answerId";
+            SqlCommand command = new SqlCommand(sql, con);
+            try
+            {
+                int pID = Convert.ToInt32(pollId);
+                command.Parameters.AddWithValue("@pollId", pID);
+                command.Parameters.AddWithValue("@answerId", answerId);
+                OpenDB();
+                votes = (int)command.ExecuteScalar() + 1;
+                CloseDB();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+
+            sql = "UPDATE PollAnswers SET VoteCount = @votes WHERE PollID = @pollId and AnswerID = @answerId";
+            command = new SqlCommand(sql, con);
+            try
+            {
+                int pID = Convert.ToInt32(pollId);
+                command.Parameters.AddWithValue("@votes", votes);
+                command.Parameters.AddWithValue("@pollId", pID);
+                command.Parameters.AddWithValue("@answerId", answerId);
+                OpenDB();
+                int rowsChanged = command.ExecuteNonQuery();
+                CloseDB();
+                if (rowsChanged != 1)
+                    throw new Exception($"Update statement updated {rowsChanged} rows when placing vote.");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
         /// <summary>
         /// Replaces null Object with DBNull.Value. Used for adding nullable types to database.

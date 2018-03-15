@@ -13,6 +13,7 @@ add_poll
                             "PollQuestion": (string),
                             "EndDate": (datetime?),
                             "AnswerType": (int),
+			    "AnswerCount": (int),
                             "Answers": [
                                 (string = answer text),
                                 (string = answer text),
