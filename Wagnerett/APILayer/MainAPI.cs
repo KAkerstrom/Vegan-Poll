@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Helpers;
 
 namespace APILayer
 {
@@ -15,6 +17,7 @@ namespace APILayer
             //Get data from Request.Form in the form of "action", "data[PollQuestion]" or "data[doot[doot]]"
             Response.ContentType = "application/json";
             string action = Request.Form["action"];
+            string resp;
 
             switch (action)
             {
@@ -69,7 +72,7 @@ namespace APILayer
                         string id, trip;
                         if (DBInterface.CreatePoll(newPoll, out id, out trip))
                         {
-                            string resp = "{" +
+                            resp = "{" +
                                           "\"Success\":true," +
                                           "\"Error\":[]," +
                                           "\"data\":{" +
@@ -81,7 +84,7 @@ namespace APILayer
                         }
                         else
                         {
-                            string resp = "{" +
+                            resp = "{" +
                                           "\"Success\":false," +
                                           "\"Error\":[]," + //Todo: Populate errors & add try-catches
                                           "\"data\":{" +
@@ -113,7 +116,7 @@ namespace APILayer
                     {
                         if (DBInterface.ClosePoll(Request.Form["data"]))
                         {
-                            string resp = "{" +
+                            resp = "{" +
                                           "\"Success\":true," +
                                           "\"Error\":[]" +
                                           "}";
@@ -121,7 +124,7 @@ namespace APILayer
                         }
                         else
                         {
-                            string resp = "{" +
+                            resp = "{" +
                                           "\"Success\":false," +
                                           "\"Error\":[]" + //Todo: Populate errors & add try-catches
                                           "}";
@@ -178,7 +181,7 @@ namespace APILayer
                         string id, trip;
                         if (DBInterface.EditPoll(newPoll))
                         {
-                            string resp = "{" +
+                            resp = "{" +
                                           "\"Success\":true," +
                                           "\"Error\":[]" +
                                           "}";
@@ -186,7 +189,7 @@ namespace APILayer
                         }
                         else
                         {
-                            string resp = "{" +
+                            resp = "{" +
                                           "\"Success\":false," +
                                           "\"Error\":[]" + //Todo: Populate errors & add try-catches
                                           "}";
@@ -214,7 +217,7 @@ namespace APILayer
                     {
                         if (DBInterface.DeletePoll(Request.Form["data"]))
                         {
-                            string resp = "{" +
+                            resp = "{" +
                                           "\"Success\":true," +
                                           "\"Error\":[]" +
                                           "}";
@@ -222,7 +225,7 @@ namespace APILayer
                         }
                         else
                         {
-                            string resp = "{" +
+                            resp = "{" +
                                           "\"Success\":false," +
                                           "\"Error\":[]" + //Todo: Populate errors & add try-catches
                                           "}";
@@ -250,26 +253,72 @@ namespace APILayer
                 //  ]
                 //}
                 case "vote":
-                {
-                    string id = Request.Form["data[PollID]"];
-                    int answerId = Convert.ToInt32(Request.Form["data[AnswerID]"]);
-                    if (DBInterface.Vote(id, answerId))
                     {
-                        string resp = "{" +
-                                      "\"Success\":true," +
-                                      "\"Error\":[]" +
-                                      "}";
-                        Response.Write(resp);
+                        string id = Request.Form["data[PollID]"];
+                        int answerId = Convert.ToInt32(Request.Form["data[AnswerID]"]);
+                        if (DBInterface.Vote(id, answerId))
+                        {
+                            resp = "{" +
+                                          "\"Success\":true," +
+                                          "\"Error\":[]" +
+                                          "}";
+                            Response.Write(resp);
+                        }
+                        else
+                        {
+                            resp = "{" +
+                                          "\"Success\":false," +
+                                          "\"Error\":[]" + //Todo: Populate errors & add try-catches
+                                          "}";
+                            Response.Write(resp);
+                        }
+                    }
+                    break;
+
+                //Server receives:
+                //{
+                //  "action":"get_poll",
+                //  data:{ "PollID":(string = PollID) }
+                //}
+
+                //Server sends:
+                //"Success":(string = "true" or "false", if operation was successful),
+                //"Error":[
+                //            (string = error),
+                //            (string = error),
+                //            (string = error)
+                //  ]
+                //"Poll":{
+                //  "PollQuestion": (string),
+                //  "EndDate": (datetime?),
+                //  "AnswerType": (int),
+                //  "AnswerCount": (int),
+                //  "Answers": [
+                //      { "ID": (int), "Text": (string), "Votes": (int) },
+                //      { "ID": (int), "Text": (string), "Votes": (int) },
+                //      { "ID": (int), "Text": (string), "Votes": (int) }
+                //  ]
+                //}
+                case "get_poll":
+                    Poll poll = DBInterface.GetPoll(Request.Form["data[PollID]"]);
+                    if (poll != null)
+                    {
+                        StringBuilder sb = new StringBuilder("{\"Success\":true,\"Error\":[]}");
+                        sb.Append("\"Poll\":{");
+                        sb.Append($"\"PollQuestion\": {Json.Encode(poll.Question)},");
+                        sb.Append($"\"EndDate\": {Json.Encode(poll.EndDate)},");
+                        sb.Append($"\"AnswerType\": {Json.Encode(poll.AnswerType)},");
+                        sb.Append($"\"Answers\":[");
+                        foreach (PollAnswer answer in poll.Answers)
+                            sb.Append($"{{\"ID\": {Json.Encode(answer.AnswerID)}, \"Text\": {Json.Encode(answer.AnswerText)}, \"Votes\": {Json.Encode(answer.Votes)}}},");
+                        sb.Remove(sb.Length - 1, 1); //Remove trailing comma
+                        sb.Append("]}");
+                        resp = sb.ToString();
                     }
                     else
-                    {
-                        string resp = "{" +
-                                      "\"Success\":false," +
-                                      "\"Error\":[]" + //Todo: Populate errors & add try-catches
-                                      "}";
-                        Response.Write(resp);
-                    }
-                    }
+                        resp = $"{{\"Success\":false,\"Error\":[\"Poll #{Request.Form["data[PollID]"]} was not found.\"]}}";
+
+                    Response.Write(resp);
                     break;
 
                 default:

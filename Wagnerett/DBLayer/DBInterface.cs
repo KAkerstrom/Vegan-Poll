@@ -153,7 +153,7 @@ namespace DBLayer
 
         }
 
-        public static Poll GetPoll(int PollID)
+        public static Poll GetPoll(string PollID)
         {
             string sql = "SELECT * FROM Polls WHERE PollID = @pID";
             Poll retPoll = new Poll();
@@ -248,8 +248,7 @@ namespace DBLayer
             SqlCommand command = new SqlCommand(sql, con);
             try
             {
-                int pID = Convert.ToInt32(pollId);
-                command.Parameters.AddWithValue("@pollId", pID);
+                command.Parameters.AddWithValue("@pollId", pollId);
                 command.Parameters.AddWithValue("@answerId", answerId);
                 OpenDB();
                 votes = (int)command.ExecuteScalar() + 1;
@@ -265,9 +264,8 @@ namespace DBLayer
             command = new SqlCommand(sql, con);
             try
             {
-                int pID = Convert.ToInt32(pollId);
                 command.Parameters.AddWithValue("@votes", votes);
-                command.Parameters.AddWithValue("@pollId", pID);
+                command.Parameters.AddWithValue("@pollId", pollId);
                 command.Parameters.AddWithValue("@answerId", answerId);
                 OpenDB();
                 int rowsChanged = command.ExecuteNonQuery();
