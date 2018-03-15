@@ -153,23 +153,26 @@ namespace DBLayer
 
         }
 
-        public static Poll GetPoll(int PollID)
+        public static Poll GetPoll(string pollID)
         {
             string sql = "SELECT * FROM Polls WHERE PollID = @pID";
-            Poll retPoll = new Poll();
+            Poll retPoll = null;
             OpenDB();
             SqlCommand command = new SqlCommand(sql, con);
-            command.Parameters.Add("@pID", SqlDbType.Int);
-            command.Parameters["@pID"].Value = PollID;
-
-            using (SqlDataReader dr = command.ExecuteReader())
+            command.Parameters.AddWithValue("@pID", pollID);
+            SqlDataReader reader = command.ExecuteReader(CommandBehavior.Default);
+            while (reader.Read())
             {
-                while (dr.Read())
-                {
-                    string treatment = dr[0].ToString();
-                }
-            }
+                string PollID = (string) reader["PollID"];
+                string Question = (string) reader["PollQuestion"];
+                DateTime DateCreated = (DateTime) reader["TimeCreated"];
+                DateTime? EndDate = (DateTime?) DBNullToNull(reader["EndDate"]);
+                string Tripcode = (string) reader["Tripcode"];
+                int AnswerType = (int) reader["AnswerTypeID"];
+                bool Disabled = (bool) reader["Disabled"];
 
+                retPoll = new Poll(PollID, Question, DateCreated, EndDate, Tripcode, AnswerType, Disabled);
+            }
             CloseDB();
             return retPoll;
         }
@@ -180,9 +183,8 @@ namespace DBLayer
             SqlCommand command = new SqlCommand(sql, con);
             try
             {
-                int pID = Convert.ToInt32(pollID);
                 command.Parameters.AddWithValue("@eDate", DateTime.Now);
-                command.Parameters.AddWithValue("@pID", pID);
+                command.Parameters.AddWithValue("@pID", pollID);
                 OpenDB();
                 command.ExecuteNonQuery();
                 CloseDB();
@@ -264,8 +266,7 @@ namespace DBLayer
             SqlCommand command = new SqlCommand(sql, con);
             try
             {
-                int pID = Convert.ToInt32(pollId);
-                command.Parameters.AddWithValue("@pollId", pID);
+                command.Parameters.AddWithValue("@pollId", pollId);
                 command.Parameters.AddWithValue("@answerId", answerId);
                 OpenDB();
                 votes = (int)command.ExecuteScalar() + 1;
@@ -281,9 +282,8 @@ namespace DBLayer
             command = new SqlCommand(sql, con);
             try
             {
-                int pID = Convert.ToInt32(pollId);
                 command.Parameters.AddWithValue("@votes", votes);
-                command.Parameters.AddWithValue("@pollId", pID);
+                command.Parameters.AddWithValue("@pollId", pollId);
                 command.Parameters.AddWithValue("@answerId", answerId);
                 OpenDB();
                 int rowsChanged = command.ExecuteNonQuery();
@@ -309,7 +309,7 @@ namespace DBLayer
             return O ?? DBNull.Value;
         }
         /// <summary>
-        /// Rebleces DBNull Objects with null. Used for translating null database entries to nullable parameters
+        /// Rebleces DBNull Objects with null. Used for translating potentially null database entries to nullable parameters
         /// </summary>
         /// <param name="O"></param>
         /// <returns></returns>
