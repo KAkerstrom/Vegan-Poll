@@ -201,13 +201,14 @@ namespace DBLayer
         /// <returns></returns>
         public static bool EditPoll(Poll newPoll)
         {
-            string sql = "UPDATE Polls SET PollQuestion = @pQuestion, EndDate = @pEndDate, AnswerTypeID = @pAnswerTypeID WHERE PollID = @pID";
+            string sql = "UPDATE Polls SET PollQuestion = @pQuestion, EndDate = @pEndDate, AnswerTypeID = @pAnswerTypeID, Disabled = @pDisabled WHERE PollID = @pID";
             SqlCommand command = new SqlCommand(sql, con);
             try
             {
                 command.Parameters.AddWithValue("@pQuestion", newPoll.Question);
                 command.Parameters.AddWithValue("@pEndDate", NullToDBNull(newPoll.EndDate));
                 command.Parameters.AddWithValue("@AnswerTypeID", newPoll.AnswerType);
+                command.Parameters.AddWithValue("@pDisabled", newPoll.Disabled);
                 command.Parameters.AddWithValue("@pID", newPoll.PollID);
                 OpenDB();
                 int affectedRows = command.ExecuteNonQuery();
@@ -232,7 +233,21 @@ namespace DBLayer
 
         public static bool DeletePoll(string pollID)
         {
-            return true;
+            string sql = "UPDATE Polls SET Disabled = 1 WHERE PollID = @pID";
+            SqlCommand command = new SqlCommand(sql, con);
+            OpenDB();
+            int affectedRows = command.ExecuteNonQuery();
+            CloseDB();
+
+            if (affectedRows == 1)
+            {
+                return true;
+            }
+            if (affectedRows == 0)
+            {
+                throw new Exception("Poll does not exist in database.");
+            }
+            throw new Exception("ERROR: Multiple rows affected.");
         }
 
         /// <summary>
@@ -301,5 +316,6 @@ namespace DBLayer
         {
             return O == DBNull.Value ? null : O;
         }
+
     }
 }
