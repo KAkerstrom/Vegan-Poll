@@ -139,7 +139,7 @@ namespace DBLayer
 
         public static void InsertPollAnswer(PollAnswer Answer)
         {
-            string sqlString = "INSERT INTO PollAnswers (AnswerID, PollID, AnswerText, AnswerCount) VALUES @answerID, @pollID, @answerText, @answerCount)";
+            string sqlString = "INSERT INTO PollAnswers (AnswerID, PollID, AnswerText, AnswerCount) VALUES (@answerID, @pollID, @answerText, @answerCount)";
             SqlCommand command = new SqlCommand(sqlString, con);
             command.Parameters.AddWithValue("@answerID", Answer.AnswerID);
             command.Parameters.AddWithValue("@pollID", Answer.PollID);
