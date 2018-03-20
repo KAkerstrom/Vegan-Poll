@@ -107,10 +107,10 @@ namespace DBLayer
             command.Parameters.AddWithValue("@disabled", poll.Disabled);
 
 
-            for (int i = 1; i < poll.Answers.Count + 1; i++)
+            for (int i = 0; i < poll.Answers.Count; i++)
             {
                 poll.Answers[i].PollID = poll.PollID;
-                poll.Answers[i].AnswerID = i;
+                poll.Answers[i].AnswerID = i + 1;
             }
             
 
