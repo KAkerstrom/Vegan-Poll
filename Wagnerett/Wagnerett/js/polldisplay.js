@@ -97,7 +97,7 @@ $(document).ready(function () {
     $(".PollBox").append('<div class="SubmitButton">Submit!</div>');
 
     $(".PollBox").children('.SubmitButton').on('click', function () {
-        API('add_poll', { PollQuestion: "How large is Mark's vagina?", Answers: "Too small, Too big, I mean he is a giant cunt." }, function () {
+        API('add_poll', { PollQuestion: "How large is Mark's vagina?", Answers: ["Too small", "Too big", "I mean he is a giant cunt"] }, function () {
 
         });
     });

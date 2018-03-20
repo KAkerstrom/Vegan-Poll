@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace APILayer
 {
@@ -29,7 +30,6 @@ namespace APILayer
                 //            "PollQuestion": (string),
                 //            "EndDate": (datetime?),
                 //            "AnswerType": (int),
-                //            "AnswerCount": (int),
                 //            "Answers": [
                 //                (string = answer text),
                 //                (string = answer text),
@@ -55,13 +55,21 @@ namespace APILayer
                 case "add_poll":
                     {
                         Poll newPoll = new Poll();
-                        newPoll.Question = Request.Form["data[PollQuestion]"];
+                         newPoll.Question = Request.Form["data[PollQuestion]"];
                         newPoll.AnswerType = Convert.ToInt32(Request.Form["data[AnswerType]"]); //TryParse
                         newPoll.Answers = new List<PollAnswer>();
 
-                        int answerCount = int.Parse(Request.Form["data[AnswerCount]"]); //Tryparse
-                        for (int i = 0; i < answerCount; i++)
-                            newPoll.Answers.Add(new PollAnswer(Request.Form[$"data[Answers[{i}]]"]));
+                        int answerIndex = 0;
+
+                        //Testing
+                        string qwertyui = Request.Form[$"data[Answers][]"];
+                        List<string> answers = new List<string>();
+                        foreach (string s in qwertyui.Split(','))
+                            answers.Add(HexToUnicode(s));
+
+                        /////////////////
+                        while (Request.Form[$"data[Answers][{answerIndex}]"] != null)
+                            newPoll.Answers.Add(new PollAnswer(Request.Form[$"data[Answers][{answerIndex}]"]));
 
                         DateTime endDate;
                         if (DateTime.TryParse(Request.Form["data[EndDate]"], out endDate))
@@ -327,6 +335,19 @@ namespace APILayer
                 default:
                     break;
             }
+        }
+
+        private string HexToUnicode(string hex)
+        {
+            if(hex.Length % 4 != 0)
+                throw new Exception("Length of hex string was not divisible by 4.");
+
+            byte[] bytes = new byte[hex.Length / 4];
+            for (int i = 0; i < hex.Length / 4; i++)
+                bytes[i] = Convert.ToByte(hex.Substring(i * 4, 4));
+
+            Encoding unicode = Encoding.Unicode;
+            return unicode.GetString(bytes);
         }
     }
 }
