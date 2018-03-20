@@ -105,14 +105,13 @@ namespace DBLayer
             command.Parameters.AddWithValue("@tripCode", poll.Tripcode);
             command.Parameters.AddWithValue("@answerTypeId", poll.AnswerType);
             command.Parameters.AddWithValue("@disabled", poll.Disabled);
-            //command.Prepare();
-            //Also remember to insert poll answers!
 
             try
             {
                 OpenDB();
                 command.ExecuteNonQuery();
                 CloseDB();
+                InsertPollAnswer(poll.Answers);
             }
             catch (Exception e)
             {
