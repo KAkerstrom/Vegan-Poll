@@ -26,6 +26,8 @@ namespace DBLayer
             OpenDB();
             SqlCommand cmd = new SqlCommand(sql, con);
             SqlDataReader reader = cmd.ExecuteReader();
+
+            //Loads answer type names and IDs from database
             while (reader.Read())
             {
                 AnswerTypeDictionary.Add((int)reader["AnswerTypeID"], (string)reader["Type"]);
@@ -95,8 +97,7 @@ namespace DBLayer
             poll.Tripcode = tripCode;
 
             //TODO: finish this method
-            string sqlString =
-                "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID, Disabled) VALUES (@pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId, @disabled)";
+            string sqlString = "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID, Disabled) VALUES (@pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId, @disabled)";
             SqlCommand command = new SqlCommand(sqlString, con);
             command.Parameters.AddWithValue("@pollId", poll.PollID);
             command.Parameters.AddWithValue("@pollQuestion", poll.Question);
@@ -105,14 +106,13 @@ namespace DBLayer
             command.Parameters.AddWithValue("@tripCode", poll.Tripcode);
             command.Parameters.AddWithValue("@answerTypeId", poll.AnswerType);
             command.Parameters.AddWithValue("@disabled", poll.Disabled);
-            //command.Prepare();
-            //Also remember to insert poll answers!
 
             try
             {
                 OpenDB();
                 command.ExecuteNonQuery();
                 CloseDB();
+                InsertPollAnswer(poll.Answers);
             }
             catch (Exception e)
             {
@@ -132,8 +132,7 @@ namespace DBLayer
 
         public static void InsertPollAnswer(PollAnswer Answer)
         {
-            string sqlString =
-                "INSERT INTO PollAnswers (AnswerID, PollID, AnswerText, AnswerCount) VALUES @answerID, @pollID, @answerText, @answerCount)";
+            string sqlString = "INSERT INTO PollAnswers (AnswerID, PollID, AnswerText, AnswerCount) VALUES @answerID, @pollID, @answerText, @answerCount)";
             SqlCommand command = new SqlCommand(sqlString, con);
             command.Parameters.AddWithValue("@answerID", Answer.AnswerID);
             command.Parameters.AddWithValue("@pollID", Answer.PollID);
@@ -159,15 +158,18 @@ namespace DBLayer
             Poll retPoll = new Poll();
             OpenDB();
             SqlCommand command = new SqlCommand(sql, con);
-            command.Parameters.Add("@pID", SqlDbType.Int);
-            command.Parameters["@pID"].Value = PollID;
-
-            using (SqlDataReader dr = command.ExecuteReader())
+            command.Parameters.AddWithValue("@pID", PollID);
+            
+            SqlDataReader dr = command.ExecuteReader();
+            while (dr.Read())
             {
-                while (dr.Read())
-                {
-                    string treatment = dr[0].ToString();
-                }
+                retPoll.PollID = dr["PollID"].ToString();
+                retPoll.Question = dr["PollQuestion"].ToString();
+                retPoll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
+                retPoll.EndDate = Convert.ToDateTime(DBNullToNull(dr["EndDate"]));
+                retPoll.Tripcode = dr["Tripcode"].ToString();
+                retPoll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
+                retPoll.Disabled = Convert.ToBoolean(dr["Disabled"]);
             }
 
             CloseDB();
@@ -202,8 +204,7 @@ namespace DBLayer
         /// <returns></returns>
         public static bool EditPoll(Poll newPoll)
         {
-            string sql =
-                "UPDATE Polls SET PollQuestion = @pQuestion, EndDate = @pEndDate, AnswerTypeID = @pAnswerTypeID WHERE PollID = @pID";
+            string sql = "UPDATE Polls SET PollQuestion = @pQuestion, EndDate = @pEndDate, AnswerTypeID = @pAnswerTypeID WHERE PollID = @pID";
             SqlCommand command = new SqlCommand(sql, con);
             try
             {
