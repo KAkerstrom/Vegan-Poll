@@ -21,7 +21,12 @@ namespace DebugForm
         private void button1_Click(object sender, EventArgs e)
         {
             Poll l = DBInterface.GetPoll("f3dc779e56f249e3b2acf666755a35a6");
+            listBox1.Items.Add(l.PollID);
             listBox1.Items.Add(l.Question);
+            listBox1.Items.Add(l.DateCreated);
+            listBox1.Items.Add(l.EndDate);
+            listBox1.Items.Add(l.Tripcode);
+            listBox1.Items.Add(l.AnswerType);
             listBox1.Items.Add(l.Disabled);
         }
     }

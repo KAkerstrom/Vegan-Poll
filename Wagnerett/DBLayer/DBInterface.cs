@@ -96,7 +96,7 @@ namespace DBLayer
 
             //TODO: finish this method
             string sqlString =
-                "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID, Disabled) VALUES (@pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId @disabled)";
+                "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID, Disabled) VALUES (@pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId, @disabled)";
             SqlCommand command = new SqlCommand(sqlString, con);
             command.Parameters.AddWithValue("@pollId", poll.PollID);
             command.Parameters.AddWithValue("@pollQuestion", poll.Question);
@@ -159,15 +159,18 @@ namespace DBLayer
             Poll retPoll = new Poll();
             OpenDB();
             SqlCommand command = new SqlCommand(sql, con);
-            command.Parameters.Add("@pID", SqlDbType.Int);
-            command.Parameters["@pID"].Value = PollID;
-
-            using (SqlDataReader dr = command.ExecuteReader())
+            command.Parameters.AddWithValue("@pID", PollID);
+            
+            SqlDataReader dr = command.ExecuteReader();
+            while (dr.Read())
             {
-                while (dr.Read())
-                {
-                    string treatment = dr[0].ToString();
-                }
+                retPoll.PollID = dr["PollID"].ToString();
+                retPoll.Question = dr["PollQuestion"].ToString();
+                retPoll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
+                retPoll.EndDate = Convert.ToDateTime(DBNullToNull(dr["EndDate"]));
+                retPoll.Tripcode = dr["Tripcode"].ToString();
+                retPoll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
+                retPoll.Disabled = Convert.ToBoolean(dr["Disabled"]);
             }
 
             CloseDB();
