@@ -1,4 +1,16 @@
-﻿var DummyPoll = {
+﻿String.prototype.hexEncode = function () {
+    var hex, i;
+
+    var result = "";
+    for (i = 0; i < this.length; i++) {
+        hex = this.charCodeAt(i).toString(16);
+        result += ("000" + hex).slice(-4);
+    }
+
+    return result
+};
+
+var DummyPoll = {
     id: "A67ggBgt298dsdfH67",
     question: "Do you bees?",
     type: 1,
@@ -80,6 +92,43 @@ function GenResultsBox(poll) {
     return tr;
 }
 
+function GenNewPollBox() {
+    var tr = $('<div class="PollBox">');
+
+    tr.append($('<div class="Question">').append($('<input type="text" class="txtNewPollQuestion" />')));
+    tr.append('<div class="AnswerBox"></div>');
+    addAnswerBox();
+
+    tr.append('<div class="btnAddAnswer">Add Answer</div>');
+    tr.append('<div class="SubmitButton">Submit!</div>');
+
+    tr.children('.btnAddAnswer').on('click', addAnswerBox);
+    tr.children('.SubmitButton').on('click', function () {
+        var obj = {};
+        obj.PollQuestion = tr.children('.Question').children('.txtNewPollQuestion').val();
+        obj.Answers = [];
+
+        var asrs = tr.children('.AnswerBox').children();
+
+        for (var i = 0; i < asrs.length; i++) {
+            obj.Answers.push($(asrs[i]).children().val().hexEncode());
+        }
+
+        console.log(obj);
+    
+        API('add_poll', obj, function (data, error) {
+            console.log(data);
+            console.log(error);
+        });
+    });
+
+    return tr;
+
+    function addAnswerBox() {
+        tr.children('.AnswerBox').append('<div><input type="text" class="txtNewPollAnswer" /></div>');
+    }
+};
+
 function SumVotes(poll) {
     var tr = 0;
 
@@ -97,13 +146,14 @@ $(document).ready(function () {
     $(".PollBox").append('<div class="SubmitButton">Submit!</div>');
 
     $(".PollBox").children('.SubmitButton').on('click', function () {
-        API('add_poll', { PollQuestion: "How large is Mark's vagina?", Answers: "Too small, Too big, I mean he is a giant cunt." }, function () {
+        API('add_poll', { PollQuestion: "How large is Mark's vagina?", Answers: ["Too small", "Too big", "I mean he is a giant cunt"] }, function () {
 
         });
     });
 
     $("#PollList").append(GenVoteBox(DummyPoll));
     $("#PollList").append(GenResultsBox(DummyPoll));
+    $("#PollList").append(GenNewPollBox());
 });
 
 function API(action, data, c) {
