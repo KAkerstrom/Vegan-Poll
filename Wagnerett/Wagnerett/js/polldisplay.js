@@ -107,7 +107,8 @@ $(document).ready(function () {
 });
 
 function API(action, data, c) {
-    $.post('/PollAPI.aspx', { action: action, data: data }, function (success, data) {
-        console.log(success, data);
+    $.post('/PollAPI.aspx', { action: action, data: data }, function (data, error) {
+        console.log(data);
+        console.log(error);
     });
 }
