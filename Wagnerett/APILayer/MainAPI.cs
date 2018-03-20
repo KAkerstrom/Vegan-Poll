@@ -6,7 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.Helpers;
+using Newtonsoft.Json;
 
 namespace APILayer
 {
@@ -18,6 +18,7 @@ namespace APILayer
             Response.ContentType = "application/json";
             string action = Request.Form["action"];
             string resp;
+            
 
             switch (action)
             {
@@ -306,12 +307,12 @@ namespace APILayer
                     {
                         StringBuilder sb = new StringBuilder("{\"Success\":true,\"Error\":[]}");
                         sb.Append("\"Poll\":{");
-                        sb.Append($"\"PollQuestion\": {Json.Encode(poll.Question)},");
-                        sb.Append($"\"EndDate\": {Json.Encode(poll.EndDate)},");
-                        sb.Append($"\"AnswerType\": {Json.Encode(poll.AnswerType)},");
+                        sb.Append($"\"PollQuestion\": {JsonConvert.ToString(poll.Question)},");
+                        sb.Append($"\"EndDate\": {JsonConvert.ToString(poll.EndDate)},");
+                        sb.Append($"\"AnswerType\": {JsonConvert.ToString(poll.AnswerType)},");
                         sb.Append($"\"Answers\":[");
                         foreach (PollAnswer answer in poll.Answers)
-                            sb.Append($"{{\"ID\": {Json.Encode(answer.AnswerID)}, \"Text\": {Json.Encode(answer.AnswerText)}, \"Votes\": {Json.Encode(answer.Votes)}}},");
+                            sb.Append($"{{\"ID\": {JsonConvert.ToString(answer.AnswerID)}, \"Text\": {JsonConvert.ToString(answer.AnswerText)}, \"Votes\": {JsonConvert.ToString(answer.Votes)}}},");
                         sb.Remove(sb.Length - 1, 1); //Remove trailing comma
                         sb.Append("]}");
                         resp = sb.ToString();
