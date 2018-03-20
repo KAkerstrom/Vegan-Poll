@@ -25,6 +25,9 @@ body {
     display: flex;
     flex-direction: row;
 
+    /*margin-left: -15px;
+    margin-right: -15px;*/
+
     text-align: center;
 
     height: 70px;
@@ -45,4 +48,25 @@ body {
     flex: 2;
 
     background: #222;
+}
+
+.Percent {
+    position: relative;
+    min-width: 25px;
+
+    padding: 2px;
+
+    background-color: #999;
+    color: #333;
+
+    border-radius: 3px;
+}
+
+.Tally {
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    width: 100px;
+
+    text-align: right;
 }
