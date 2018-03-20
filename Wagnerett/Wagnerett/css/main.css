@@ -62,6 +62,10 @@ body {
     border-radius: 3px;
 }
 
+.Percent:last-child {
+    margin-bottom: 20px;
+}
+
 .Tally {
     display: inline-block;
     position: absolute;
