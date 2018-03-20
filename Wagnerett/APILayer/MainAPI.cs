@@ -20,7 +20,6 @@ namespace APILayer
             string action = Request.Form["action"];
             string resp;
 
-
             switch (action)
             {
                 //Server receives:
@@ -55,21 +54,17 @@ namespace APILayer
                 case "add_poll":
                     {
                         Poll newPoll = new Poll();
-                         newPoll.Question = Request.Form["data[PollQuestion]"];
+                        newPoll.Question = Request.Form["data[PollQuestion]"];
                         newPoll.AnswerType = Convert.ToInt32(Request.Form["data[AnswerType]"]); //TryParse
                         newPoll.Answers = new List<PollAnswer>();
 
                         int answerIndex = 0;
 
                         //Testing
-                        string qwertyui = Request.Form[$"data[Answers][]"];
-                        List<string> answers = new List<string>();
-                        foreach (string s in qwertyui.Split(','))
-                            answers.Add(HexToUnicode(s));
-
-                        /////////////////
-                        while (Request.Form[$"data[Answers][{answerIndex}]"] != null)
-                            newPoll.Answers.Add(new PollAnswer(Request.Form[$"data[Answers][{answerIndex}]"]));
+                        string answers = Request.Form[$"data[Answers][]"];
+                        if (!string.IsNullOrEmpty(answers))
+                            foreach (string s in answers.Split(','))
+                                newPoll.Answers.Add(new PollAnswer(HexToUnicode(s)));
 
                         DateTime endDate;
                         if (DateTime.TryParse(Request.Form["data[EndDate]"], out endDate))
@@ -339,14 +334,14 @@ namespace APILayer
 
         private string HexToUnicode(string hex)
         {
-            if(hex.Length % 4 != 0)
+            if (hex.Length % 4 != 0)
                 throw new Exception("Length of hex string was not divisible by 4.");
 
-            byte[] bytes = new byte[hex.Length / 4];
-            for (int i = 0; i < hex.Length / 4; i++)
-                bytes[i] = Convert.ToByte(hex.Substring(i * 4, 4));
+            byte[] bytes = new byte[hex.Length / 2];
+            for (int i = 0; i < hex.Length / 2; i++)
+                bytes[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
 
-            Encoding unicode = Encoding.Unicode;
+            Encoding unicode = Encoding.BigEndianUnicode;
             return unicode.GetString(bytes);
         }
     }
