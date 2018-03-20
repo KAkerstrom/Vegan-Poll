@@ -57,6 +57,7 @@ namespace APILayer
                         newPoll.Question = Request.Form["data[PollQuestion]"];
                         newPoll.AnswerType = Convert.ToInt32(Request.Form["data[AnswerType]"]); //TryParse
                         newPoll.Answers = new List<PollAnswer>();
+                        //Todo: Fix this code. Use AnswerCount and iterate through the answers up to that number
                         string[] answers = Request.Form["data[Answers]"].Split(',');
                         foreach (string answer in answers)
                             newPoll.Answers.Add(new PollAnswer(answer));
