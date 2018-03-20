@@ -5,7 +5,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
 
 namespace DBLayer
 {
@@ -57,7 +56,7 @@ namespace DBLayer
                     $"Server={Server};Database={Database};User Id={UserName};Password={Password};Connection Timeout=5;");
             }
 
-            if (con.State != System.Data.ConnectionState.Open)
+            if (con.State != ConnectionState.Open)
             {
                 con.Open();
             }
@@ -68,7 +67,7 @@ namespace DBLayer
         /// </summary>
         private static void CloseDB()
         {
-            if (con != null && con.State == System.Data.ConnectionState.Open)
+            if (con != null && con.State == ConnectionState.Open)
             {
                 con.Close();
             }
@@ -106,6 +105,14 @@ namespace DBLayer
             command.Parameters.AddWithValue("@tripCode", poll.Tripcode);
             command.Parameters.AddWithValue("@answerTypeId", poll.AnswerType);
             command.Parameters.AddWithValue("@disabled", poll.Disabled);
+
+
+            for (int i = 1; i < poll.Answers.Count + 1; i++)
+            {
+                poll.Answers[i].PollID = poll.PollID;
+                poll.Answers[i].AnswerID = i;
+            }
+            
 
             try
             {
