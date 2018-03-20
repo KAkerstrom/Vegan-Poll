@@ -18,7 +18,7 @@ namespace APILayer
             Response.ContentType = "application/json";
             string action = Request.Form["action"];
             string resp;
-            
+
 
             switch (action)
             {
@@ -58,10 +58,10 @@ namespace APILayer
                         newPoll.Question = Request.Form["data[PollQuestion]"];
                         newPoll.AnswerType = Convert.ToInt32(Request.Form["data[AnswerType]"]); //TryParse
                         newPoll.Answers = new List<PollAnswer>();
-                        //Todo: Fix this code. Use AnswerCount and iterate through the answers up to that number
-                        string[] answers = Request.Form["data[Answers]"].Split(',');
-                        foreach (string answer in answers)
-                            newPoll.Answers.Add(new PollAnswer(answer));
+
+                        int answerCount = int.Parse(Request.Form["data[AnswerCount]"]); //Tryparse
+                        for (int i = 0; i < answerCount; i++)
+                            newPoll.Answers.Add(new PollAnswer(Request.Form[$"data[Answers[{i}]]"]));
 
                         DateTime endDate;
                         if (DateTime.TryParse(Request.Form["data[EndDate]"], out endDate))
@@ -102,7 +102,7 @@ namespace APILayer
                 //Server receives:
                 //{
                 //  "action":"close_poll",
-                //  data:(string = PollID)
+                //  "data":(string = PollID)
                 //}
 
                 //Server sends:
@@ -138,7 +138,7 @@ namespace APILayer
                 //Server receives:
                 //{
                 //  "action":"edit_poll",
-                //  data:{
+                //  "data":{
                 //            "PollID": (string),
                 //            "PollQuestion": (string),
                 //            "EndDate": (datetime?),
@@ -239,7 +239,7 @@ namespace APILayer
                 //Server receives:
                 //{
                 //  "action":"vote",
-                //  data:{
+                //  "data":{
                 //       "PollID":(string = PollID),
                 //       "AnswerID":(string = Answer ID)
                 //  }
@@ -280,7 +280,7 @@ namespace APILayer
                 //Server receives:
                 //{
                 //  "action":"get_poll",
-                //  data:{ "PollID":(string = PollID) }
+                //  "data":{ "PollID":(string = PollID) }
                 //}
 
                 //Server sends:
@@ -310,10 +310,11 @@ namespace APILayer
                         sb.Append($"\"PollQuestion\": {JsonConvert.ToString(poll.Question)},");
                         sb.Append($"\"EndDate\": {JsonConvert.ToString(poll.EndDate)},");
                         sb.Append($"\"AnswerType\": {JsonConvert.ToString(poll.AnswerType)},");
-                        sb.Append($"\"Answers\":[");
+                        sb.Append("\"Answers\":[");
                         foreach (PollAnswer answer in poll.Answers)
                             sb.Append($"{{\"ID\": {JsonConvert.ToString(answer.AnswerID)}, \"Text\": {JsonConvert.ToString(answer.AnswerText)}, \"Votes\": {JsonConvert.ToString(answer.Votes)}}},");
-                        sb.Remove(sb.Length - 1, 1); //Remove trailing comma
+                        if (poll.Answers.Count > 0)
+                            sb.Remove(sb.Length - 1, 1); //Remove trailing comma
                         sb.Append("]}");
                         resp = sb.ToString();
                     }
