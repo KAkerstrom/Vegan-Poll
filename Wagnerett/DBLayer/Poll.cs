@@ -40,7 +40,7 @@ namespace DBLayer
         }
         public Poll()
         {
-
+            Disabled = false;
         }
     }
 }
