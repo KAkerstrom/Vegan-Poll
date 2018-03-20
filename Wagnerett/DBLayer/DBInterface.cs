@@ -106,6 +106,14 @@ namespace DBLayer
             command.Parameters.AddWithValue("@answerTypeId", poll.AnswerType);
             command.Parameters.AddWithValue("@disabled", poll.Disabled);
 
+
+            for (int i = 1; i < poll.Answers.Count + 1; i++)
+            {
+                poll.Answers[i].PollID = poll.PollID;
+                poll.Answers[i].AnswerID = i;
+            }
+            
+
             try
             {
                 OpenDB();
