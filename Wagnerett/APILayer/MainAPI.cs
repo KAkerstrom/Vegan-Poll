@@ -70,9 +70,7 @@ namespace APILayer
                         if (DateTime.TryParse(Request.Form["data[EndDate]"], out endDate))
                             newPoll.EndDate = endDate;
                         else
-                        {
-                            //Todo: Throw a fit
-                        }
+                            newPoll.EndDate = null;
 
                         string id, trip;
                         if (DBInterface.CreatePoll(newPoll, out id, out trip))
