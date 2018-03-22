@@ -202,11 +202,7 @@ namespace DBLayer
 
         public static List<Poll> GetRecentPolls(int pollCount)
         {
-<<<<<<< HEAD
-            string sql = "SELECT TOP @pollCount * FROM Polls WHERE (EndDate > GETDATE() OR EndDate IS NULL) AND Disabled = 0 ORDER BY DateCreated DESC";
-=======
             string sql = $"SELECT TOP {pollCount} * FROM Polls WHERE (EndDate > GETDATE() OR EndDate IS NULL) AND Disabled = 0 ORDER BY DateCreated DESC";
->>>>>>> f1d607281c4b0be4279516eecefb875013df5357
             List<Poll> topPolls = new List<Poll>();
 
             try
