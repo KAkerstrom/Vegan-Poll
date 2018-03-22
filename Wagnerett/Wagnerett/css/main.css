@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     align-items: center;
 
-    background: #111;
+    background: #222;
 }
 
 .VertDiv {
@@ -25,8 +25,14 @@ body {
     display: flex;
     flex-direction: row;
 
+    position: relative;
+
     /*margin-left: -15px;
     margin-right: -15px;*/
+
+    margin-top: 10px;
+
+    border-radius: 2px;
 
     text-align: center;
 
@@ -40,6 +46,10 @@ body {
     background-color: #333;
 }
 
+#Header, #PollList > div {
+    box-shadow: 2px 2px 4px rgba(10, 10, 10, 0.2);
+}
+
 #Logo {
     margin: auto;
 }
@@ -47,7 +57,7 @@ body {
 #Body {
     flex: 2;
 
-    background: #222;
+    /*background: #222;*/
 }
 
 .Percent {
@@ -73,4 +83,32 @@ body {
     width: 100px;
 
     text-align: right;
+}
+
+#AddBox {
+    text-align: center;
+}
+
+#btnAdd {
+    position: absolute;
+    right: 10px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 3px;
+    
+    background-color: #999;
+    color: #333;
+    font-family: ComicNeueBold;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }

@@ -7,8 +7,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div id="PollList">
-        <div class="PollBox">
-            <div class="Question">Do you bees?</div>
-        </div>
     </div>
 </asp:Content>

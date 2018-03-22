@@ -95,7 +95,7 @@ function GenResultsBox(poll) {
 function GenNewPollBox() {
     var tr = $('<div class="PollBox">');
 
-    var qBox = $('<input type="text" class="Question" />');
+    var qBox = $('<input type="text" class="Question" placeholder="Question" />');
     qBox.css({
         background: 'none',
         border: 'none',
@@ -119,10 +119,10 @@ function GenNewPollBox() {
     tr.append('<div class="AnswerBox"></div>');
     addAnswerBox();
 
-    tr.append('<div class="btnAddAnswer">Add Answer</div>');
+    tr.append('<div class="addBtnHolder"><div class="btnAddAnswer noselect">Add Answer</div></div>');
     tr.append('<div class="SubmitButton">Submit!</div>');
 
-    tr.children('.btnAddAnswer').on('click', addAnswerBox);
+    tr.children('.addBtnHolder').children('.btnAddAnswer').on('click', addAnswerBox);
     tr.children('.SubmitButton').on('click', function () {
         var obj = {};
         obj.PollQuestion = tr.children('.Question').val();
@@ -147,16 +147,31 @@ function GenNewPollBox() {
 
     function addAnswerBox() {
         var ab = $('<div class="Answer">');
-        var rb = $('<div class="RadioBox">');
-        var lb = $('<input type="text" class="Label" />');
+        var rb = $('<div class="RadioBox" style="position: relative;">');
+        var lb = $('<input type="text" class="Label" placeholder="Answer" />');
+        var db = $('<div class="btnDelete"><div class="delMin"></div></div>')
 
         rb.append(lb);
+        rb.append(db);
         ab.append(rb);
 
         tr.append(ab);
 
-        tr.children('.AnswerBox').append(ab);
+        ab.css({
+            position: 'relative',
+            opacity: 0.0,
+            marginTop: '-30px',
+            zIndex: 0
+        });
 
+        ab.animate({
+            opacity: 1.0,
+            marginTop: '0',
+            zIndex: 10
+        }, 500);
+
+        tr.children('.AnswerBox').append(ab);
+        
         lb.css({
             background: 'none',
             border: 'none',
@@ -169,6 +184,25 @@ function GenNewPollBox() {
             borderRadius: '4px',
 
             fontFamily: 'ComicNeueBold'
+        });
+
+        db.on('click', function () {
+            console.log($(this).parent().children('input').val());
+
+            var cc = $(this).parent().parent().parent().children().length;
+
+            $(this).parent().parent().animate({
+                marginBottom: '-25px',
+                opacity: 0.0
+            }, {
+                duration: 500,
+                complete: function () {
+                    $(this).remove();
+
+                    if (cc <= 1)
+                        addAnswerBox();
+                }
+            });
         });
     }
 };
@@ -183,18 +217,29 @@ function SumVotes(poll) {
     return tr;
 }
 
-$(document).ready(function () {
-    $(".PollBox").append(RadioBox('gr', 'yes', 'Yes'));
-    $(".PollBox").append(RadioBox('gr', 'no', 'No'));
-    $(".PollBox").append(RadioBox('gr', 'maybe', 'Maybe So'));
-    $(".PollBox").append('<div class="SubmitButton">Submit!</div>');
-
-    $(".PollBox").children('.SubmitButton').on('click', function () {
-        API('add_poll', { PollQuestion: "How large is Mark's vagina?", Answers: ["Too small", "Too big", "I mean he is a giant cunt"] }, function () {
-
-        });
+function GenAddBox() {
+    var tr = $('<div id="AddBox" class="PollBox">');
+    var ab = $('<div id="btnAdd">New Poll</div>');
+    
+    tr.append(ab);
+    tr.css({
     });
 
+    return tr;
+}
+
+function GenDivider() {
+    var tr = $('<div id="HeaderDivider" class="PollBox">');
+    tr.css({
+        'margin-bottom': '20px'
+    });
+
+    return tr;
+}
+
+$(document).ready(function () {
+    //$("#PollList").append(GenAddBox());
+    $("#PollList").append(GenDivider());
     $("#PollList").append(GenVoteBox(DummyPoll));
     $("#PollList").append(GenResultsBox(DummyPoll));
     $("#PollList").append(GenNewPollBox());
