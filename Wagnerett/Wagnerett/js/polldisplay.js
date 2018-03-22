@@ -38,13 +38,28 @@ var DummyPoll = {
 function GenVoteBox(poll) {
     var tr = $('<div class="PollBox">');
 
-    tr.append($('<div class="Question">').append(poll.question));
+    tr.append($('<div class="Question">').append(poll.PollQuestion));
 
-    poll.answers.forEach(function (answer) {
-        tr.append(RadioBox(poll.id, answer.id, answer.text));
+    console.log(poll);
+
+    poll.Answers.forEach(function (answer) {
+        tr.append(RadioBox(poll.PollID, answer.ID, answer.Text));
     });
 
-    tr.append('<div class="SubmitButton">Submit!</div>');
+    var sb = $('<div class="SubmitButton">Submit!</div>');
+    tr.append(sb);
+
+    sb.on('click', function () {
+        var par = {
+            PollID: poll.PollID,
+            AnswerID: RadioSelected(poll.PollID)
+        };
+
+        API('vote', par, function (data, error) {
+            console.log(data);
+            console.log(error);
+        });
+    });
 
     return tr;
 };
@@ -239,15 +254,32 @@ function GenDivider() {
 
 $(document).ready(function () {
     //$("#PollList").append(GenAddBox());
-    $("#PollList").append(GenDivider());
-    $("#PollList").append(GenVoteBox(DummyPoll));
-    $("#PollList").append(GenResultsBox(DummyPoll));
+
+    var div = GenDivider();
+    $("#PollList").append(div);
+
+
+    //$("#PollList").append(GenVoteBox(DummyPoll));
+    //$("#PollList").append(GenResultsBox(DummyPoll));
     $("#PollList").append(GenNewPollBox());
+
+    var par = {
+        PollCount: 5
+    };
+
+    API('get_poll_history', par, function (data, error) {
+        var polls = data.Polls;
+
+        console.log(polls);
+
+        polls.forEach(function (poll) {
+            div.after(GenVoteBox(poll));
+        });
+    });
 });
 
 function API(action, data, c) {
     $.post('/PollAPI.aspx', { action: action, data: data }, function (data, error) {
-        console.log(data);
-        console.log(error);
+        c(data, error);
     });
 }

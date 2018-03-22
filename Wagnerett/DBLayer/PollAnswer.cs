@@ -19,8 +19,10 @@ namespace DBLayer
             Votes = 0;
         }
 
-        public PollAnswer(string answer, int votes)
+        public PollAnswer(string pollId, int answerId, string answer, int votes)
         {
+            AnswerID = answerId;
+            PollID = pollId;
             AnswerText = answer;
             Votes = votes;
         }

@@ -91,14 +91,20 @@ body {
 
 #btnAdd {
     position: absolute;
-    right: 10px;
+    right: 15px;
+    top: 50%;
+
+    box-sizing: border-box;
 
     width: 40px;
     height: 40px;
 
-    border-radius: 3px;
-    
-    background-color: #999;
+    margin-top: -20px;
+
+    border-radius: 5px;
+    border: 2px solid #777;
+
+
     color: #333;
     font-family: ComicNeueBold;
 }

@@ -53,3 +53,16 @@ function RadioBox(group, name, label) {
 
     return $('<div class="Answer">').append(tr);
 }
+
+function RadioSelected(group) {
+    if (group in RadioGroups) {
+        var cg = RadioGroups[group];
+
+        for (var key in cg) {
+            if (cg[key].isSelected)
+                return key;
+        }
+    }
+
+    return null;
+}

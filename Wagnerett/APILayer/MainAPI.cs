@@ -348,7 +348,7 @@ namespace APILayer
                     List<Poll> polls = DBInterface.GetRecentPolls(int.Parse(Request.Form["data[PollCount]"]));
                     if (polls != null)
                     {
-                        StringBuilder sb = new StringBuilder("{\"Success\":true,\"Error\":[]}");
+                        StringBuilder sb = new StringBuilder("{\"Success\":true,\"Error\":[], ");
                         sb.Append("\"Polls\":[");
                         foreach (Poll topPoll in polls)
                         {
@@ -357,7 +357,7 @@ namespace APILayer
 
                         if (polls.Count > 0)
                             sb.Remove(sb.Length - 1, 1);
-                        sb.Append("]");
+                        sb.Append("]}");
 
                         resp = sb.ToString();
                     }
@@ -395,6 +395,7 @@ namespace APILayer
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{");
+            sb.Append($"\"PollID\": {JsonConvert.ToString(poll.PollID)},");
             sb.Append($"\"PollQuestion\": {JsonConvert.ToString(poll.Question)},");
             sb.Append($"\"EndDate\": {JsonConvert.ToString(poll.EndDate)},");
             sb.Append($"\"AnswerType\": {JsonConvert.ToString(poll.AnswerType)},");

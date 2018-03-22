@@ -204,13 +204,13 @@ namespace DBLayer
         {
             string sql = $"SELECT TOP {pollCount} * FROM Polls WHERE (EndDate > GETDATE() OR EndDate IS NULL) AND Disabled = 0 ORDER BY TimeCreated DESC";
             List<Poll> topPolls = new List<Poll>();
-
+            SqlDataReader dr = null;
             try
             {
                 OpenDB();
                 SqlCommand command = new SqlCommand(sql, con);
 
-                SqlDataReader dr = command.ExecuteReader();
+                dr = command.ExecuteReader();
                 while (dr.Read())
                 {
                     Poll poll = new Poll();
@@ -223,6 +223,17 @@ namespace DBLayer
                     poll.Disabled = Convert.ToBoolean(dr["Disabled"]);
                     topPolls.Add(poll);
                 }
+                dr.Close();
+
+                foreach (Poll p in topPolls) {
+                    sql = "SELECT AnswerID, PollID, AnswerText, AnswerCount FROM PollAnswers WHERE PollID = @pId";
+                    command = new SqlCommand(sql, con);
+                    command.Parameters.AddWithValue("@pId", p.PollID);
+                    dr = command.ExecuteReader();
+                    while (dr.Read())
+                        p.Answers.Add(new PollAnswer((string)dr["PollID"], (int)dr["AnswerID"], (string)dr["AnswerText"], (int)dr["AnswerCount"]));
+                    dr.Close();
+                }
 
                 CloseDB();
             }
@@ -230,6 +241,11 @@ namespace DBLayer
             {
                 Console.WriteLine("Error getting recent polls: " + ex.Message);
                 return null;
+            }
+            finally
+            {
+                if (dr != null && !dr.IsClosed)
+                    dr.Close();
             }
 
             return topPolls;
