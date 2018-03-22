@@ -104,10 +104,39 @@ body {
     border-radius: 5px;
     border: 2px solid #777;
 
-
     color: #333;
     font-family: ComicNeueBold;
 }
+
+    #btnAdd .Horiz {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        width: 24px;
+        height: 4px;
+
+        margin-left: -12px;
+        margin-top: -2px;
+
+        background-color: #777;
+    }
+
+    #btnAdd .Vert {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 24px;
+        margin-left: -2px;
+        margin-top: -12px;
+        background-color: #777;
+    }
+
+    #btnAdd:hover {
+        cursor: pointer;
+    }
 
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */

@@ -319,8 +319,8 @@ namespace APILayer
                     Poll poll = DBInterface.GetPoll(Request.Form["data[PollID]"]);
                     if (poll != null)
                     {
-                        StringBuilder sb = new StringBuilder("{\"Success\":true,\"Error\":[]}");
-                        sb.Append($"\"Poll\":{PollToJson(poll)}");
+                        StringBuilder sb = new StringBuilder("{\"Success\":true,\"Error\":[],");
+                        sb.Append($"\"Poll\":{PollToJson(poll)}}}");
                         resp = sb.ToString();
                     }
                     else

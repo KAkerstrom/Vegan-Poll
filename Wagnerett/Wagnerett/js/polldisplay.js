@@ -10,31 +10,6 @@
     return result
 };
 
-var DummyPoll = {
-    id: "A67ggBgt298dsdfH67",
-    question: "Do you bees?",
-    type: 1,
-    created: "Feb 28, 2018 6:42AM",
-    closed: null,
-    answers: [
-        {
-            id: 23,
-            text: "Yes",
-            votes: 17
-        },
-        {
-            id: 24,
-            text: "No",
-            votes: 2
-        },
-        {
-            id: 25,
-            text: "Maybe So",
-            votes: 10
-        }
-    ]
-};
-
 function GenVoteBox(poll) {
     var tr = $('<div class="PollBox">');
 
@@ -55,10 +30,20 @@ function GenVoteBox(poll) {
             AnswerID: RadioSelected(poll.PollID)
         };
 
-        API('vote', par, function (data, error) {
-            console.log(data);
-            console.log(error);
-        });
+        if (par.AnswerID == null) {
+            alert('Please select a response.');
+        }
+        else {
+            API('vote', par, function (data, error) {
+                API('get_poll', { PollID: par.PollID }, function (data) {
+                    console.log(data);
+                });
+
+
+//                console.log(data);
+//                console.log(error);
+            });
+        }
     });
 
     return tr;
@@ -253,15 +238,12 @@ function GenDivider() {
 }
 
 $(document).ready(function () {
-    //$("#PollList").append(GenAddBox());
-
     var div = GenDivider();
     $("#PollList").append(div);
 
-
-    //$("#PollList").append(GenVoteBox(DummyPoll));
-    //$("#PollList").append(GenResultsBox(DummyPoll));
-    $("#PollList").append(GenNewPollBox());
+    $("#btnAdd").on('click', function () {
+        div.after(GenNewPollBox());
+    });
 
     var par = {
         PollCount: 5

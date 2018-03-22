@@ -11,6 +11,7 @@ namespace DBLayer
     public static class DBInterface
     {
         private const string Server = "172.18.28.12";
+        //private const string Server = "10.0.1.40";
         private const string Database = "Vegan-Poll";
         private const string UserName = "SQLAdmin";
         private const string Password = "P@$$W0rd";
@@ -170,24 +171,33 @@ namespace DBLayer
         public static Poll GetPoll(string PollID)
         {
             string sql = "SELECT * FROM Polls WHERE PollID = @pID";
-            Poll retPoll = new Poll();
+            Poll poll = new Poll();
             OpenDB();
             SqlCommand command = new SqlCommand(sql, con);
             command.Parameters.AddWithValue("@pID", PollID);
+            SqlDataReader dr = null;
 
             try
             {
-                SqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
-                {
-                    retPoll.PollID = dr["PollID"].ToString();
-                    retPoll.Question = dr["PollQuestion"].ToString();
-                    retPoll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
-                    retPoll.EndDate = dr["EndDate"] == DBNull.Value ? null : (DateTime?)dr["EndDate"];
-                    retPoll.Tripcode = dr["Tripcode"].ToString();
-                    retPoll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
-                    retPoll.Disabled = Convert.ToBoolean(dr["Disabled"]);
+                dr = command.ExecuteReader();
+                while (dr.Read()) {
+                    poll.PollID = dr["PollID"].ToString();
+                    poll.Question = dr["PollQuestion"].ToString();
+                    poll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
+                    poll.EndDate = dr["EndDate"] == DBNull.Value ? null : (DateTime?)dr["EndDate"];
+                    poll.Tripcode = dr["Tripcode"].ToString();
+                    poll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
+                    poll.Disabled = Convert.ToBoolean(dr["Disabled"]);
                 }
+                dr.Close();
+
+                sql = "SELECT AnswerID, PollID, AnswerText, AnswerCount FROM PollAnswers WHERE PollID = @pId";
+                command = new SqlCommand(sql, con);
+                command.Parameters.AddWithValue("@pId", poll.PollID);
+                dr = command.ExecuteReader();
+                while (dr.Read())
+                    poll.Answers.Add(new PollAnswer((string)dr["PollID"], (int)dr["AnswerID"], (string)dr["AnswerText"], (int)dr["AnswerCount"]));
+                dr.Close();
 
                 CloseDB();
             }
@@ -196,8 +206,12 @@ namespace DBLayer
                 Console.WriteLine("Error getting poll: " + ex.Message);
                 return null;
             }
+            finally {
+                if (dr != null && !dr.IsClosed)
+                    dr.Close();
+            }
 
-            return retPoll;
+            return poll;
         }
 
         public static List<Poll> GetRecentPolls(int pollCount)
