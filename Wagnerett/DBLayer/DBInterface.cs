@@ -202,7 +202,7 @@ namespace DBLayer
 
         public static List<Poll> GetRecentPolls(int pollCount)
         {
-            string sql = "SELECT TOP @pollCount DateCreated FROM Polls WHERE (EndDate > GETDATE() OR EndDate IS NULL) AND Disabled = 0 ORDER BY DateCreated DESC";
+            string sql = "SELECT TOP @pollCount * FROM Polls WHERE (EndDate > GETDATE() OR EndDate IS NULL) AND Disabled = 0 ORDER BY DateCreated DESC";
             List<Poll> topPolls = new List<Poll>();
 
             try
@@ -298,6 +298,7 @@ namespace DBLayer
         {
             string sql = "UPDATE Polls SET Disabled = 1 WHERE PollID = @pID";
             SqlCommand command = new SqlCommand(sql, con);
+            command.Parameters.AddWithValue("@pID", pollID);
             OpenDB();
             int affectedRows = command.ExecuteNonQuery();
             CloseDB();

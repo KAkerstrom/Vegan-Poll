@@ -1,5 +1,6 @@
 ﻿using System;
 using DBLayer;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject2
@@ -7,6 +8,7 @@ namespace UnitTestProject2
     [TestClass]
     public class UnitTest1
     {
+        
         string hmmmm;
         static string haha = "450";
         static DateTime? NANI = DateTime.Now;
@@ -32,11 +34,11 @@ namespace UnitTestProject2
             Assert.AreEqual(p.Question, pr.Question);
             Assert.AreEqual(p.Disabled, pr.Disabled);
             Assert.AreEqual(p.Tripcode, pr.Tripcode);
-           // Assert.AreEqual(p.EndDate, pr.EndDate);
+            Assert.AreEqual(p.EndDate, pr.EndDate);
             Assert.AreEqual(p.AnswerType, pr.AnswerType);
            //Assert.AreEqual(p.DateCreated, pr.DateCreated);
             Assert.AreEqual(p.PollID, pr.PollID);
-            Assert.AreEqual(p.Answers, pr.Answers);
+            //Assert.AreEqual(p.Answers, pr.Answers);
             
         }
         [TestMethod]
@@ -46,6 +48,24 @@ namespace UnitTestProject2
             DBInterface.CreatePoll(p, out string sad, out string meh);
             cpp = DBInterface.ClosePoll(sad);
             Assert.AreEqual(cp, cpp);
+        }
+        [TestMethod]
+        public void DeletePoll()
+        {
+            bool cp = true, cpp;
+            DBInterface.CreatePoll(p, out string sad, out string meh);
+            cpp = DBInterface.DeletePoll(sad);
+            Assert.AreEqual(cp, cpp);
+        }
+        [TestMethod]
+        public void GetRecentPolls()
+        {
+            List<Poll> pr = new List<Poll>();
+            
+                pr = DBInterface.GetRecentPolls(4);
+            Assert.IsNotNull(pr);
+          
+        
         }
     }
 }
