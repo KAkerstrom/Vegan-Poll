@@ -16,7 +16,7 @@ namespace DBLayer
         public string Tripcode { get; set; }
         public int AnswerType { get; set; }
         public bool Disabled { get; set; }
-        public List<PollAnswer> Answers { get; set; }
+        public List<PollAnswer> Answers { get; set; } = new List<PollAnswer>();
 
         public Poll(string ID, string Quest, DateTime Datecreate, DateTime? End, string trip, int Answer)
         {

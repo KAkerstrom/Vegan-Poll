@@ -1,0 +1,9 @@
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\b\UnitTestProject2\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\b\UnitTestProject2\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\b\UnitTestProject2\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\b\UnitTestProject2\bin\Debug\UnitTestProject2.dll
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\b\UnitTestProject2\bin\Debug\UnitTestProject2.pdb
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\i\UnitTestProject2\Debug\UnitTestProject2.csprojResolveAssemblyReference.cache
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\i\UnitTestProject2\Debug\UnitTestProject2.csproj.CoreCompileInputs.cache
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\i\UnitTestProject2\Debug\UnitTestProject2.dll
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\i\UnitTestProject2\Debug\UnitTestProject2.pdb
