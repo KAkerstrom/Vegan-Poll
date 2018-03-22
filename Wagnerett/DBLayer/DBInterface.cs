@@ -298,6 +298,7 @@ namespace DBLayer
         {
             string sql = "UPDATE Polls SET Disabled = 1 WHERE PollID = @pID";
             SqlCommand command = new SqlCommand(sql, con);
+            command.Parameters.AddWithValue("@pID", pollID);
             OpenDB();
             int affectedRows = command.ExecuteNonQuery();
             CloseDB();
