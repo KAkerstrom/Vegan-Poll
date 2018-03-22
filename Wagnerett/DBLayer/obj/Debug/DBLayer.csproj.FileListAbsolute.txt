@@ -1,0 +1,11 @@
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\bin\Debug\DBLayer.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\bin\Debug\DBLayer.pdb
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\obj\Debug\DBLayer.csprojResolveAssemblyReference.cache
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\obj\Debug\DBLayer.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\obj\Debug\DBLayer.pdb
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\obj\Debug\DBLayer.csproj.CoreCompileInputs.cache
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\bin\Debug\DBLayer.dll.config
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\bin\Debug\Microsoft.Data.Tools.Schema.Sql.UnitTesting.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\bin\Debug\Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DBLayer\obj\Debug\DBLayer.csproj.CopyComplete

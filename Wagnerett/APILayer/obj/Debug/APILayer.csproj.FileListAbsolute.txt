@@ -1,0 +1,12 @@
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\bin\Debug\APILayer.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\bin\Debug\APILayer.pdb
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\obj\Debug\APILayer.csprojResolveAssemblyReference.cache
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\obj\Debug\APILayer.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\obj\Debug\APILayer.pdb
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\bin\Debug\DBLayer.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\bin\Debug\DBLayer.pdb
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\obj\Debug\APILayer.csproj.CoreCompileInputs.cache
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\obj\Debug\APILayer.csproj.CopyComplete
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\APILayer\bin\Debug\DBLayer.dll.config

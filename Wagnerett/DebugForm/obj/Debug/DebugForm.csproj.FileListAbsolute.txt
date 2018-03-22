@@ -1,0 +1,13 @@
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\bin\Debug\DebugForm.exe.config
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\bin\Debug\DebugForm.exe
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\bin\Debug\DebugForm.pdb
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\bin\Debug\DBLayer.dll
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\bin\Debug\DBLayer.pdb
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\obj\Debug\DebugForm.csprojResolveAssemblyReference.cache
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\obj\Debug\DebugForm.Form1.resources
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\obj\Debug\DebugForm.Properties.Resources.resources
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\obj\Debug\DebugForm.csproj.GenerateResource.Cache
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\obj\Debug\DebugForm.exe
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\obj\Debug\DebugForm.pdb
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\obj\Debug\DebugForm.csproj.CoreCompileInputs.cache
+C:\Users\mark.wagner1\Documents\GitHub\Vegan-Poll\Wagnerett\DebugForm\obj\Debug\DebugForm.csproj.CopyComplete
