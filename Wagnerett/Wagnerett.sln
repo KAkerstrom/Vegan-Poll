@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wagnerett", "Wagnerett\Wagnerett.csproj", "{F8194351-384D-4AF1-B3D3-2F0A06541AA4}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBLayer", "DBLayer\DBLayer.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APILayer", "APILayer\APILayer.csproj", "{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugForm", "DebugForm\DebugForm.csproj", "{E9ADEB5B-C141-4E7C-9FAC-F1735A503BA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject2", "UnitTestProject2\UnitTestProject2.csproj", "{85C05300-4BD1-409E-9507-544060A99365}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B52B89EE-EAD1-496D-9578-0A5BFE31DFEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9ADEB5B-C141-4E7C-9FAC-F1735A503BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9ADEB5B-C141-4E7C-9FAC-F1735A503BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9ADEB5B-C141-4E7C-9FAC-F1735A503BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9ADEB5B-C141-4E7C-9FAC-F1735A503BA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85C05300-4BD1-409E-9507-544060A99365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85C05300-4BD1-409E-9507-544060A99365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85C05300-4BD1-409E-9507-544060A99365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85C05300-4BD1-409E-9507-544060A99365}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
