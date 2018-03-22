@@ -213,7 +213,6 @@ namespace DBLayer
             {
                 OpenDB();
                 SqlCommand command = new SqlCommand(sql, con);
-                command.Parameters.AddWithValue("@pollCount", pollCount);
 
                 SqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
@@ -222,7 +221,6 @@ namespace DBLayer
                     poll.PollID = dr["PollID"].ToString();
                     poll.Question = dr["PollQuestion"].ToString();
                     poll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
-                    poll.EndDate = Convert.ToDateTime(DBNullToNull(dr["EndDate"]));
                     poll.EndDate = dr["EndDate"] == DBNull.Value ? null : (DateTime?)dr["EndDate"];
                     poll.Tripcode = dr["Tripcode"].ToString();
                     poll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
