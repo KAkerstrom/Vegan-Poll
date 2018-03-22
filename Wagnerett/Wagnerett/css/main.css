@@ -1,0 +1,120 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: #222;
+}
+
+.VertDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.HorizDiv {
+    display: flex;
+    flex-direction: row;
+}
+
+#Header {
+    display: flex;
+    flex-direction: row;
+
+    position: relative;
+
+    /*margin-left: -15px;
+    margin-right: -15px;*/
+
+    margin-top: 10px;
+
+    border-radius: 2px;
+
+    text-align: center;
+
+    height: 70px;
+
+    font-family: Moon;
+    font-size: 40px;
+
+    color: #EEE;
+
+    background-color: #333;
+}
+
+#Header, #PollList > div {
+    box-shadow: 2px 2px 4px rgba(10, 10, 10, 0.2);
+}
+
+#Logo {
+    margin: auto;
+}
+
+#Body {
+    flex: 2;
+
+    /*background: #222;*/
+}
+
+.Percent {
+    position: relative;
+    min-width: 25px;
+
+    padding: 2px;
+
+    background-color: #999;
+    color: #333;
+
+    border-radius: 3px;
+}
+
+.Percent:last-child {
+    margin-bottom: 20px;
+}
+
+.Tally {
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    width: 100px;
+
+    text-align: right;
+}
+
+#AddBox {
+    text-align: center;
+}
+
+#btnAdd {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+
+    box-sizing: border-box;
+
+    width: 40px;
+    height: 40px;
+
+    margin-top: -20px;
+
+    border-radius: 5px;
+    border: 2px solid #777;
+
+
+    color: #333;
+    font-family: ComicNeueBold;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}

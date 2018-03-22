@@ -1,0 +1,27 @@
+﻿@font-face {
+    font-family: Moon;
+    src: url(font/Moon2.0-Regular.otf);
+}
+
+@font-face {
+    font-family: MoonBold;
+    src: url(font/Moon2.0-Bold.otf);
+}
+
+@font-face {
+    font-family: MoonLight;
+    src: url(font/Moon2.0-Light.otf);
+}
+
+
+/* Comic Neue */
+
+@font-face {
+    font-family: ComicNeue;
+    src: url(font/ComicNeue-Regular.otf);
+}
+
+@font-face {
+    font-family: ComicNeueBold;
+    src: url(font/ComicNeue_Bold.otf);
+}

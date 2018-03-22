@@ -1,0 +1,6 @@
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\b\APILayer\bin\Debug\APILayer.dll
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\b\APILayer\bin\Debug\APILayer.pdb
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\i\APILayer\Debug\APILayer.csprojResolveAssemblyReference.cache
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\i\APILayer\Debug\APILayer.csproj.CoreCompileInputs.cache
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\i\APILayer\Debug\APILayer.dll
+C:\Users\dustin.hoffart\Documents\GitHub\Vegan-Poll\Wagnerett\.vs\Wagnerett\lut\0\i\APILayer\Debug\APILayer.pdb
