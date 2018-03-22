@@ -202,7 +202,11 @@ namespace DBLayer
 
         public static List<Poll> GetRecentPolls(int pollCount)
         {
+<<<<<<< HEAD
             string sql = "SELECT TOP @pollCount * FROM Polls WHERE (EndDate > GETDATE() OR EndDate IS NULL) AND Disabled = 0 ORDER BY DateCreated DESC";
+=======
+            string sql = $"SELECT TOP {pollCount} * FROM Polls WHERE (EndDate > GETDATE() OR EndDate IS NULL) AND Disabled = 0 ORDER BY DateCreated DESC";
+>>>>>>> f1d607281c4b0be4279516eecefb875013df5357
             List<Poll> topPolls = new List<Poll>();
 
             try
@@ -219,6 +223,7 @@ namespace DBLayer
                     poll.Question = dr["PollQuestion"].ToString();
                     poll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
                     poll.EndDate = Convert.ToDateTime(DBNullToNull(dr["EndDate"]));
+                    poll.EndDate = dr["EndDate"] == DBNull.Value ? null : (DateTime?)dr["EndDate"];
                     poll.Tripcode = dr["Tripcode"].ToString();
                     poll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
                     poll.Disabled = Convert.ToBoolean(dr["Disabled"]);
