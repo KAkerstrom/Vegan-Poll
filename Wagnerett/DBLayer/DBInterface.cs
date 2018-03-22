@@ -95,6 +95,9 @@ namespace DBLayer
             poll.PollID = pollID;
             poll.Tripcode = tripCode;
 
+            if (poll == null || poll.Answers == null)
+                return false; //Pass error as string??
+
             //TODO: finish this method
             string sqlString = "INSERT INTO Polls (PollID, PollQuestion, TimeCreated, EndDate, TripCode, AnswerTypeID, Disabled) VALUES (@pollId, @pollQuestion, @timeCreated, @endDate, @tripCode, @answerTypeId, @disabled)";
             SqlCommand command = new SqlCommand(sqlString, con);
@@ -106,13 +109,12 @@ namespace DBLayer
             command.Parameters.AddWithValue("@answerTypeId", poll.AnswerType);
             command.Parameters.AddWithValue("@disabled", poll.Disabled);
 
-
             for (int i = 0; i < poll.Answers.Count; i++)
             {
                 poll.Answers[i].PollID = poll.PollID;
                 poll.Answers[i].AnswerID = i + 1;
             }
-            
+
 
             try
             {
@@ -123,21 +125,25 @@ namespace DBLayer
             }
             catch (Exception e)
             {
+                Console.WriteLine("Error when adding poll to the database.");
                 return false;
             }
 
             return true;
         }
 
-        public static void InsertPollAnswer(List<PollAnswer> AnswerList)
+        public static bool InsertPollAnswer(List<PollAnswer> AnswerList)
         {
             foreach (PollAnswer A in AnswerList)
             {
-                InsertPollAnswer(A);
+                if (!InsertPollAnswer(A))
+                    return false;
             }
+
+            return true;
         }
 
-        public static void InsertPollAnswer(PollAnswer Answer)
+        public static bool InsertPollAnswer(PollAnswer Answer)
         {
             string sqlString = "INSERT INTO PollAnswers (AnswerID, PollID, AnswerText, AnswerCount) VALUES (@answerID, @pollID, @answerText, @answerCount)";
             SqlCommand command = new SqlCommand(sqlString, con);
@@ -155,8 +161,10 @@ namespace DBLayer
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
 
+            return true;
         }
 
         public static Poll GetPoll(string PollID)
@@ -166,21 +174,66 @@ namespace DBLayer
             OpenDB();
             SqlCommand command = new SqlCommand(sql, con);
             command.Parameters.AddWithValue("@pID", PollID);
-            
-            SqlDataReader dr = command.ExecuteReader();
-            while (dr.Read())
+
+            try
             {
-                retPoll.PollID = dr["PollID"].ToString();
-                retPoll.Question = dr["PollQuestion"].ToString();
-                retPoll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
-                retPoll.EndDate = Convert.ToDateTime(DBNullToNull(dr["EndDate"]));
-                retPoll.Tripcode = dr["Tripcode"].ToString();
-                retPoll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
-                retPoll.Disabled = Convert.ToBoolean(dr["Disabled"]);
+                SqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    retPoll.PollID = dr["PollID"].ToString();
+                    retPoll.Question = dr["PollQuestion"].ToString();
+                    retPoll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
+                    retPoll.EndDate = dr["EndDate"] == DBNull.Value ? null : (DateTime?)dr["EndDate"];
+                    retPoll.Tripcode = dr["Tripcode"].ToString();
+                    retPoll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
+                    retPoll.Disabled = Convert.ToBoolean(dr["Disabled"]);
+                }
+
+                CloseDB();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting poll: " + ex.Message);
+                return null;
             }
 
-            CloseDB();
             return retPoll;
+        }
+
+        public static List<Poll> GetRecentPolls(int pollCount)
+        {
+            string sql = "SELECT TOP @pollCount DateCreated FROM Polls WHERE (EndDate > GETDATE() OR EndDate IS NULL) AND Disabled = 0 ORDER BY DateCreated DESC";
+            List<Poll> topPolls = new List<Poll>();
+
+            try
+            {
+                OpenDB();
+                SqlCommand command = new SqlCommand(sql, con);
+                command.Parameters.AddWithValue("@pollCount", pollCount);
+
+                SqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    Poll poll = new Poll();
+                    poll.PollID = dr["PollID"].ToString();
+                    poll.Question = dr["PollQuestion"].ToString();
+                    poll.DateCreated = Convert.ToDateTime(dr["TimeCreated"]);
+                    poll.EndDate = Convert.ToDateTime(DBNullToNull(dr["EndDate"]));
+                    poll.Tripcode = dr["Tripcode"].ToString();
+                    poll.AnswerType = Convert.ToInt32(dr["AnswerTypeID"]);
+                    poll.Disabled = Convert.ToBoolean(dr["Disabled"]);
+                    topPolls.Add(poll);
+                }
+
+                CloseDB();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting recent polls: " + ex.Message);
+                return null;
+            }
+
+            return topPolls;
         }
 
         public static bool ClosePoll(string pollID)
