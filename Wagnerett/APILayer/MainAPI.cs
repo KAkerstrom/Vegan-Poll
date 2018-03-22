@@ -258,21 +258,34 @@ namespace APILayer
                 case "vote":
                     {
                         string id = Request.Form["data[PollID]"];
-                        int answerId = Convert.ToInt32(Request.Form["data[AnswerID]"]);
-                        if (DBInterface.Vote(id, answerId))
+                        int answerId;
+                        if (!string.IsNullOrEmpty(Request.Form["data[AnswerID]"]))
                         {
-                            resp = "{" +
-                                          "\"Success\":true," +
-                                          "\"Error\":[]" +
-                                          "}";
-                            Response.Write(resp);
+                            answerId = Convert.ToInt32(Request.Form["data[AnswerID]"]);
+
+                            if (DBInterface.Vote(id, answerId))
+                            {
+                                resp = "{" +
+                                       "\"Success\":true," +
+                                       "\"Error\":[]" +
+                                       "}";
+                                Response.Write(resp);
+                            }
+                            else
+                            {
+                                resp = "{" +
+                                       "\"Success\":false," +
+                                       "\"Error\":[]" + //Todo: Populate errors & add try-catches
+                                       "}";
+                                Response.Write(resp);
+                            }
                         }
                         else
                         {
                             resp = "{" +
-                                          "\"Success\":false," +
-                                          "\"Error\":[]" + //Todo: Populate errors & add try-catches
-                                          "}";
+                                   "\"Success\":false," +
+                                   "\"Error\":[]" + //Todo: Populate errors & add try-catches
+                                   "}";
                             Response.Write(resp);
                         }
                     }
