@@ -353,35 +353,18 @@ namespace DBLayer
         /// <returns>Returns true if successful. If not, writes the error to the console and returns false.</returns>
         public static bool Vote(string pollId, int answerId)
         {
-            int votes;
-            string sql = "SELECT AnswerCount FROM PollAnswers WHERE PollID = @pollId and AnswerID = @answerId";
+            string sql = "UPDATE PollAnswers SET AnswerCount = AnswerCount + 1 WHERE PollID = @pollId and AnswerID = @answerId";
             SqlCommand command = new SqlCommand(sql, con);
             try
             {
                 command.Parameters.AddWithValue("@pollId", pollId);
                 command.Parameters.AddWithValue("@answerId", answerId);
                 OpenDB();
-                votes = (int)command.ExecuteScalar() + 1;
-                CloseDB();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-
-            sql = "UPDATE PollAnswers SET VoteCount = @votes WHERE PollID = @pollId and AnswerID = @answerId";
-            command = new SqlCommand(sql, con);
-            try
-            {
-                command.Parameters.AddWithValue("@votes", votes);
-                command.Parameters.AddWithValue("@pollId", pollId);
-                command.Parameters.AddWithValue("@answerId", answerId);
-                OpenDB();
                 int rowsChanged = command.ExecuteNonQuery();
                 CloseDB();
                 if (rowsChanged != 1)
-                    throw new Exception($"Update statement updated {rowsChanged} rows when placing vote.");
+                    return false;
+                    //throw new Exception($"Update statement updated {rowsChanged} rows when placing vote.");
 
                 return true;
             }

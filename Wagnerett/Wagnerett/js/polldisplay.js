@@ -35,7 +35,18 @@ function GenVoteBox(poll) {
         }
         else {
             API('vote', par, function (data, error) {
+                var vp = Cookies.getJSON('votedPolls');
+                if (vp == undefined || vp == null)
+                    vp = {};
+
+                vp[par.PollID] = true;
+
+                Cookies.set('votedPolls', JSON.stringify(vp));
+
+                console.log(data);
                 API('get_poll', { PollID: par.PollID }, function (data) {
+                    tr.replaceWith(GenResultsBox(data.Poll));
+
                     console.log(data);
                 });
 
@@ -53,22 +64,26 @@ function GenResultsBox(poll) {
     var tr = $('<div class="PollBox">');
     var tv = SumVotes(poll);
 
-    tr.append($('<div class="Question">').append(poll.question));
+    tr.append($('<div class="Question">').append(poll.PollQuestion));
 
-    poll.answers.forEach(function (answer) {
+    poll.Answers.forEach(function (answer) {
         var ab = $('<div class="Answer">');
         var rb = $('<div class="RadioBox">');
         var lb = $('<div class="Label">');
 
-        var per = Math.floor((answer.votes / tv) * 100.0);
+        var per = Math.floor((answer.Votes / tv) * 100.0);
+        if (tv <= 0)
+            per = 0.0;
 
-        lb.append(answer.text);
+        lb.append(answer.Text);
 
         var pb = $('<div class="Percent">');
         pb.text(per + "%");
 
+        var p = answer.Votes == 1;
+
         var tb = $('<div class="Tally">');
-        tb.append(answer.votes + " votes");
+        tb.append(answer.Votes + (p ? " vote" : " votes"));
 
         if (per < 50)
             tb.css({
@@ -210,8 +225,8 @@ function GenNewPollBox() {
 function SumVotes(poll) {
     var tr = 0;
 
-    poll.answers.forEach(function (answer) {
-        tr += answer.votes;
+    poll.Answers.forEach(function (answer) {
+        tr += answer.Votes;
     });
 
     return tr;
@@ -246,7 +261,7 @@ $(document).ready(function () {
     });
 
     var par = {
-        PollCount: 5
+        PollCount: 50
     };
 
     API('get_poll_history', par, function (data, error) {
@@ -254,8 +269,12 @@ $(document).ready(function () {
 
         console.log(polls);
 
+        var vp = Cookies.getJSON('votedPolls');
+        if (vp == undefined || vp == null)
+            vp = {};
+
         polls.forEach(function (poll) {
-            div.after(GenVoteBox(poll));
+            div.after(((poll.PollID in vp) ? GenResultsBox : GenVoteBox)(poll));
         });
     });
 });
