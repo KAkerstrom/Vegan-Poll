@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace APILayer
 {
@@ -19,7 +20,6 @@ namespace APILayer
             string action = Request.Form["action"];
             string resp;
 
-
             switch (action)
             {
                 //Server receives:
@@ -29,7 +29,6 @@ namespace APILayer
                 //            "PollQuestion": (string),
                 //            "EndDate": (datetime?),
                 //            "AnswerType": (int),
-                //            "AnswerCount": (int),
                 //            "Answers": [
                 //                (string = answer text),
                 //                (string = answer text),
@@ -59,17 +58,19 @@ namespace APILayer
                         newPoll.AnswerType = Convert.ToInt32(Request.Form["data[AnswerType]"]); //TryParse
                         newPoll.Answers = new List<PollAnswer>();
 
-                        int answerCount = int.Parse(Request.Form["data[AnswerCount]"]); //Tryparse
-                        for (int i = 0; i < answerCount; i++)
-                            newPoll.Answers.Add(new PollAnswer(Request.Form[$"data[Answers[{i}]]"]));
+                        int answerIndex = 0;
+
+                        //Testing
+                        string answers = Request.Form[$"data[Answers][]"];
+                        if (!string.IsNullOrEmpty(answers))
+                            foreach (string s in answers.Split(','))
+                                newPoll.Answers.Add(new PollAnswer(HexToUnicode(s)));
 
                         DateTime endDate;
                         if (DateTime.TryParse(Request.Form["data[EndDate]"], out endDate))
                             newPoll.EndDate = endDate;
                         else
-                        {
-                            //Todo: Throw a fit
-                        }
+                            newPoll.EndDate = null;
 
                         string id, trip;
                         if (DBInterface.CreatePoll(newPoll, out id, out trip))
@@ -327,6 +328,19 @@ namespace APILayer
                 default:
                     break;
             }
+        }
+
+        private string HexToUnicode(string hex)
+        {
+            if (hex.Length % 4 != 0)
+                throw new Exception("Length of hex string was not divisible by 4.");
+
+            byte[] bytes = new byte[hex.Length / 2];
+            for (int i = 0; i < hex.Length / 2; i++)
+                bytes[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+
+            Encoding unicode = Encoding.BigEndianUnicode;
+            return unicode.GetString(bytes);
         }
     }
 }

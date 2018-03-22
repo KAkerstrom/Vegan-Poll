@@ -5,7 +5,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
 
 namespace DBLayer
 {
@@ -57,7 +56,7 @@ namespace DBLayer
                     $"Server={Server};Database={Database};User Id={UserName};Password={Password};Connection Timeout=5;");
             }
 
-            if (con.State != System.Data.ConnectionState.Open)
+            if (con.State != ConnectionState.Open)
             {
                 con.Open();
             }
@@ -68,7 +67,7 @@ namespace DBLayer
         /// </summary>
         private static void CloseDB()
         {
-            if (con != null && con.State == System.Data.ConnectionState.Open)
+            if (con != null && con.State == ConnectionState.Open)
             {
                 con.Close();
             }
@@ -107,6 +106,14 @@ namespace DBLayer
             command.Parameters.AddWithValue("@answerTypeId", poll.AnswerType);
             command.Parameters.AddWithValue("@disabled", poll.Disabled);
 
+
+            for (int i = 0; i < poll.Answers.Count; i++)
+            {
+                poll.Answers[i].PollID = poll.PollID;
+                poll.Answers[i].AnswerID = i + 1;
+            }
+            
+
             try
             {
                 OpenDB();
@@ -132,7 +139,7 @@ namespace DBLayer
 
         public static void InsertPollAnswer(PollAnswer Answer)
         {
-            string sqlString = "INSERT INTO PollAnswers (AnswerID, PollID, AnswerText, AnswerCount) VALUES @answerID, @pollID, @answerText, @answerCount)";
+            string sqlString = "INSERT INTO PollAnswers (AnswerID, PollID, AnswerText, AnswerCount) VALUES (@answerID, @pollID, @answerText, @answerCount)";
             SqlCommand command = new SqlCommand(sqlString, con);
             command.Parameters.AddWithValue("@answerID", Answer.AnswerID);
             command.Parameters.AddWithValue("@pollID", Answer.PollID);

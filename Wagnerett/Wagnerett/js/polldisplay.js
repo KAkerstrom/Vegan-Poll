@@ -1,4 +1,16 @@
-﻿var DummyPoll = {
+﻿String.prototype.hexEncode = function () {
+    var hex, i;
+
+    var result = "";
+    for (i = 0; i < this.length; i++) {
+        hex = this.charCodeAt(i).toString(16);
+        result += ("000" + hex).slice(-4);
+    }
+
+    return result
+};
+
+var DummyPoll = {
     id: "A67ggBgt298dsdfH67",
     question: "Do you bees?",
     type: 1,
@@ -80,6 +92,87 @@ function GenResultsBox(poll) {
     return tr;
 }
 
+function GenNewPollBox() {
+    var tr = $('<div class="PollBox">');
+
+    var qBox = $('<input type="text" class="Question" />');
+    qBox.css({
+        background: 'none',
+        border: 'none',
+        outline: 'none',
+
+        width: '100%',
+        boxSizing: 'border-box',
+
+        margin: '0',
+        marginBottom: '20px',
+        padding: '5px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        borderRadius: '3px',
+
+        backgroundColor: '#444'
+    });
+
+
+    tr.append(qBox);
+    tr.append('<div class="AnswerBox"></div>');
+    addAnswerBox();
+
+    tr.append('<div class="btnAddAnswer">Add Answer</div>');
+    tr.append('<div class="SubmitButton">Submit!</div>');
+
+    tr.children('.btnAddAnswer').on('click', addAnswerBox);
+    tr.children('.SubmitButton').on('click', function () {
+        var obj = {};
+        obj.PollQuestion = tr.children('.Question').val();
+        obj.Answers = [];
+
+        var asrs = tr.children('.AnswerBox').children();
+
+        for (var i = 0; i < asrs.length; i++) {
+            console.log($(asrs[i]).children('.RadioBox'));
+            obj.Answers.push($(asrs[i]).children('.RadioBox').children('.Label').val().hexEncode());
+        }
+
+        console.log(obj);
+    
+        API('add_poll', obj, function (data, error) {
+            console.log(data);
+            console.log(error);
+        });
+    });
+
+    return tr;
+
+    function addAnswerBox() {
+        var ab = $('<div class="Answer">');
+        var rb = $('<div class="RadioBox">');
+        var lb = $('<input type="text" class="Label" />');
+
+        rb.append(lb);
+        ab.append(rb);
+
+        tr.append(ab);
+
+        tr.children('.AnswerBox').append(ab);
+
+        lb.css({
+            background: 'none',
+            border: 'none',
+            outline: 'none',
+
+            padding: '5px',
+
+            backgroundColor: '#444',
+            color: 'white',
+            borderRadius: '4px',
+
+            fontFamily: 'ComicNeueBold'
+        });
+    }
+};
+
 function SumVotes(poll) {
     var tr = 0;
 
@@ -97,13 +190,14 @@ $(document).ready(function () {
     $(".PollBox").append('<div class="SubmitButton">Submit!</div>');
 
     $(".PollBox").children('.SubmitButton').on('click', function () {
-        API('add_poll', { PollQuestion: "How large is Mark's vagina?", Answers: "Too small, Too big, I mean he is a giant cunt." }, function () {
+        API('add_poll', { PollQuestion: "How large is Mark's vagina?", Answers: ["Too small", "Too big", "I mean he is a giant cunt"] }, function () {
 
         });
     });
 
     $("#PollList").append(GenVoteBox(DummyPoll));
     $("#PollList").append(GenResultsBox(DummyPoll));
+    $("#PollList").append(GenNewPollBox());
 });
 
 function API(action, data, c) {
