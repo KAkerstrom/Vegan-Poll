@@ -153,8 +153,20 @@ function GenNewPollBox() {
         console.log(obj);
     
         API('add_poll', obj, function (data, error) {
-            console.log(data);
-            console.log(error);
+            console.log(data.data);
+            API('get_poll', { PollID: data.data.PollID }, function (data) {
+                console.log(data);
+
+                tr.remove();
+
+                $('#HeaderDivider').after(GenResultsBox(data.Poll));
+
+                //$("#PollList").append(GenResultsBox(data.Poll));
+                //tr.replaceWith(GenResultsBox(data.Poll));
+
+            });
+
+            tr.replaceWith();
         });
     });
 
@@ -265,7 +277,7 @@ $(document).ready(function () {
     };
 
     API('get_poll_history', par, function (data, error) {
-        var polls = data.Polls;
+        var polls = data.Polls.reverse();
 
         console.log(polls);
 

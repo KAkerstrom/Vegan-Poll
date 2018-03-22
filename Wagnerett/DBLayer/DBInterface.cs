@@ -10,8 +10,8 @@ namespace DBLayer
 {
     public static class DBInterface
     {
-        private const string Server = "172.18.28.12";
-        //private const string Server = "10.0.1.40";
+        //private const string Server = "172.18.28.12";
+        private const string Server = "10.0.1.40";
         private const string Database = "Vegan-Poll";
         private const string UserName = "SQLAdmin";
         private const string Password = "P@$$W0rd";
