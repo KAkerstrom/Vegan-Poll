@@ -8,7 +8,7 @@ namespace UnitTestProject2
     public class UnitTest1
     {
         string hmmmm;
-        static string haha = "440";
+        static string haha = "450";
         static DateTime? NANI = DateTime.Now;
         static DateTime WHAT = DateTime.Now;
 
@@ -38,6 +38,14 @@ namespace UnitTestProject2
             Assert.AreEqual(p.PollID, pr.PollID);
             Assert.AreEqual(p.Answers, pr.Answers);
             
+        }
+        [TestMethod]
+        public void ClosePoll()
+        {
+            bool cp = true,cpp;
+            DBInterface.CreatePoll(p, out string sad, out string meh);
+            cpp = DBInterface.ClosePoll(sad);
+            Assert.AreEqual(cp, cpp);
         }
     }
 }
