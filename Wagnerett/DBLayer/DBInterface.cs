@@ -242,9 +242,8 @@ namespace DBLayer
             SqlCommand command = new SqlCommand(sql, con);
             try
             {
-                int pID = Convert.ToInt32(pollID);
                 command.Parameters.AddWithValue("@eDate", DateTime.Now);
-                command.Parameters.AddWithValue("@pID", pID);
+                command.Parameters.AddWithValue("@pID", pollID);
                 OpenDB();
                 command.ExecuteNonQuery();
                 CloseDB();
