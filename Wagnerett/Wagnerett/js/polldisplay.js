@@ -182,7 +182,7 @@ function GenNewPollBox() {
         rb.append(db);
         ab.append(rb);
 
-        tr.append(ab);
+        //tr.append(ab);
 
         ab.css({
             position: 'relative',
@@ -198,6 +198,7 @@ function GenNewPollBox() {
         }, 500);
 
         tr.children('.AnswerBox').append(ab);
+        lb.focus();
         
         lb.css({
             background: 'none',
@@ -230,6 +231,17 @@ function GenNewPollBox() {
                         addAnswerBox();
                 }
             });
+        });
+
+        lb.on('keydown', function (e) {
+            var keyCode = e.keyCode || e.which;
+
+            if (keyCode == 9) {
+                e.preventDefault();
+                
+                if ($(this).val().length > 0)
+                    addAnswerBox();
+            }
         });
     }
 };
