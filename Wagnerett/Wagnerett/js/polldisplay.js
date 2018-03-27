@@ -41,18 +41,11 @@ function GenVoteBox(poll) {
 
                 vp[par.PollID] = true;
 
-                Cookies.set('votedPolls', JSON.stringify(vp));
-
-                console.log(data);
+                Cookies.set('votedPolls', JSON.stringify(vp), { expires: 90 });
+                
                 API('get_poll', { PollID: par.PollID }, function (data) {
                     tr.replaceWith(GenResultsBox(data.Poll));
-
-                    console.log(data);
                 });
-
-
-//                console.log(data);
-//                console.log(error);
             });
         }
     });
