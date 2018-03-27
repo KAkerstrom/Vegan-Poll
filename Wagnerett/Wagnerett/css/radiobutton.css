@@ -35,6 +35,11 @@
 
     .RadioBox .Label {
         flex: 2;
+
+        min-width: 90%;
+
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     *:hover > .RadioBox .Button {

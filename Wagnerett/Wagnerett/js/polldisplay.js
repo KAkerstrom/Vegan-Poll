@@ -133,7 +133,7 @@ function GenNewPollBox() {
     tr.children('.addBtnHolder').children('.btnAddAnswer').on('click', addAnswerBox);
     tr.children('.SubmitButton').on('click', function () {
         var obj = {};
-        obj.PollQuestion = tr.children('.Question').val();
+        obj.PollQuestion = tr.children('.Question').val().trim();
         obj.Answers = [];
 
         var asrs = tr.children('.AnswerBox').children();
@@ -142,25 +142,30 @@ function GenNewPollBox() {
             console.log($(asrs[i]).children('.RadioBox'));
             obj.Answers.push($(asrs[i]).children('.RadioBox').children('.Label').val().hexEncode());
         }
+        
 
-        console.log(obj);
-    
-        API('add_poll', obj, function (data, error) {
-            console.log(data.data);
-            API('get_poll', { PollID: data.data.PollID }, function (data) {
-                console.log(data);
+        if (obj.PollQuestion.length < 2)
+            alert("You must enter a question.");
+        else if (obj.Answers.length < 2)
+            alert("You must have at least two answers.");
+        else {
+            API('add_poll', obj, function (data, error) {
+                console.log(data.data);
+                API('get_poll', { PollID: data.data.PollID }, function (data) {
+                    console.log(data);
 
-                tr.remove();
+                    tr.remove();
 
-                $('#HeaderDivider').after(GenResultsBox(data.Poll));
+                    $('#HeaderDivider').after(GenResultsBox(data.Poll));
 
-                //$("#PollList").append(GenResultsBox(data.Poll));
-                //tr.replaceWith(GenResultsBox(data.Poll));
+                    //$("#PollList").append(GenResultsBox(data.Poll));
+                    //tr.replaceWith(GenResultsBox(data.Poll));
 
+                });
+
+                tr.replaceWith();
             });
-
-            tr.replaceWith();
-        });
+        }
     });
 
     return tr;
